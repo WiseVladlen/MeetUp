@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginBottom="@dimen/toolbar.bottom_margin"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/add_event.event_title_hint" />
+
+            <TextView
+                android:id="@+id/textView_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginHorizontal="@dimen/toolbar.action_button_horizontal_margin"
+                android:paddingHorizontal="@dimen/toolbar.action_button_horizontal_padding"
+                android:paddingVertical="@dimen/toolbar.action_button_vertical_padding"
+                android:text="@string/add_event.done" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/all_day_card"
+                layout="@layout/all_day_card_layout" />
+
+            <include
+                android:id="@+id/start_date_time_card"
+                layout="@layout/date_time_card_layout" />
+
+            <include
+                android:id="@+id/end_date_time_card"
+                layout="@layout/date_time_card_layout" />
+
+            <include
+                android:id="@+id/participant_list_card"
+                layout="@layout/text_image_card_layout" />
+
+            <include
+                android:id="@+id/location_card"
+                layout="@layout/text_image_card_layout" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_calendar"
+        android:icon="@drawable/ic_baseline_today"
+        android:title="@string/bottom_navigation_menu.today" />
+
+    <item
+        android:id="@+id/navigation_room_list"
+        android:icon="@drawable/ic_baseline_meeting_room"
+        android:title="@string/bottom_navigation_menu.room_list" />
+
+    <item
+        android:id="@+id/navigation_event_list"
+        android:icon="@drawable/ic_baseline_event_list"
+        android:title="@string/bottom_navigation_menu.event_list" />
+
+</menu>

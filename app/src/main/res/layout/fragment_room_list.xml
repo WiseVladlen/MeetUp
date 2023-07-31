@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/toolbar.bottom_margin"
+        app:title="@string/room_list.title"
+        app:titleCentered="true" />
+
+    <ViewSwitcher
+        android:id="@+id/viewSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textView_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/room_list.no_results_message" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/room_list_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </ViewSwitcher>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_room_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button.height"
+        android:layout_marginHorizontal="@dimen/button.horizontal_margin"
+        android:layout_marginVertical="@dimen/button.vertical_margin"
+        android:text="@string/room_list.add" />
+
+</LinearLayout>

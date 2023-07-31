@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_marginBottom="@dimen/toolbar.bottom_margin"
+        app:navigationIcon="@drawable/ic_baseline_close">
+
+        <ImageButton
+            android:layout_width="@dimen/image_button.width"
+            android:layout_height="@dimen/image_button.height"
+            android:layout_gravity="end"
+            android:contentDescription="@string/event_details.edit_description"
+            android:src="@drawable/ic_baseline_edit" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/card.horizontal_margin"
+        android:layout_marginVertical="@dimen/card.vertical_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card.subtitle_top_margin"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button.height"
+        android:layout_marginHorizontal="@dimen/button.horizontal_margin"
+        android:layout_marginTop="@dimen/button.top_margin"
+        android:text="@string/event_details.delete" />
+
+</LinearLayout>

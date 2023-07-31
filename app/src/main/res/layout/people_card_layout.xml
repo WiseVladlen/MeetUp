@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/card.horizontal_padding"
+    android:paddingVertical="@dimen/card.vertical_padding">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/people_card.avatar_description"
+        android:padding="@dimen/card_icon.padding"
+        android:src="@drawable/ic_baseline_person" />
+
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/card.title_horizontal_margin"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/button_delete"
+        android:layout_width="@dimen/image_button.width"
+        android:layout_height="@dimen/image_button.height"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/people_card.delete_people_description"
+        android:src="@drawable/ic_baseline_close"
+        android:visibility="gone" />
+
+</LinearLayout>

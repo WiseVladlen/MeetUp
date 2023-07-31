@@ -1,0 +1,94 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+    id "androidx.navigation.safeargs"
+}
+
+android {
+    namespace 'com.example.meet_up'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.meet_up"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.navigation:navigation-fragment:2.6.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.1'
+
+    // Room
+    def room_version = "2.5.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Dagger
+    def dagger_version = "2.45"
+    implementation "com.google.dagger:dagger:$dagger_version"
+
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // Navigation
+    def navigation_version = "2.6.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigation_version"
+
+    // View binding delegate
+    def view_binding_delegate_version = "1.5.9"
+    implementation "com.github.kirich1409:viewbindingpropertydelegate-full:$view_binding_delegate_version"
+    implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:$view_binding_delegate_version"
+
+    // Calendar
+    def calendar_version = "2.3.0"
+    implementation "com.kizitonwose.calendar:view:$calendar_version"
+
+    // Adapter delegates
+    def adapter_delegates_version = "4.3.2"
+    implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:$adapter_delegates_version"
+    implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:$adapter_delegates_version"
+
+    // CalDav
+    implementation 'com.github.bitfireAT:dav4jvm:2.2.1'
+
+    // ICalendar
+    implementation 'net.sf.biweekly:biweekly:0.6.7'
+
+    // Okhttp
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

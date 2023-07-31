@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text input layout. -->
+    <dimen name="text_input_layout.height">56dp</dimen>
+    <dimen name="text_input_layout.horizontal_margin">16dp</dimen>
+    <dimen name="text_input_layout.vertical_margin">12dp</dimen>
+    <dimen name="text_input_layout.top_margin">12dp</dimen>
+    <dimen name="text_input_layout.bottom_margin">12dp</dimen>
+    <!-- Button. -->
+    <dimen name="button.height">56dp</dimen>
+    <dimen name="button.horizontal_margin">16dp</dimen>
+    <dimen name="button.vertical_margin">16dp</dimen>
+    <dimen name="button.top_margin">12dp</dimen>
+    <!-- Radio button. -->
+    <dimen name="radio_button.width">64dp</dimen>
+    <!-- Image button. -->
+    <dimen name="image_button.width">56dp</dimen>
+    <dimen name="image_button.height">56dp</dimen>
+    <!-- Text. -->
+    <dimen name="text.horizontal_padding">16dp</dimen>
+    <!-- Toolbar. -->
+    <dimen name="toolbar.bottom_margin">12dp</dimen>
+    <dimen name="toolbar.action_button_horizontal_padding">16dp</dimen>
+    <dimen name="toolbar.action_button_vertical_padding">8dp</dimen>
+    <dimen name="toolbar.action_button_margin">12dp</dimen>
+    <dimen name="toolbar.action_button_end_margin">12dp</dimen>
+    <dimen name="toolbar.action_button_horizontal_margin">12dp</dimen>
+    <!-- Card. -->
+    <dimen name="card.normal_height">56dp</dimen>
+    <dimen name="card.horizontal_padding">16dp</dimen>
+    <dimen name="card.vertical_padding">12dp</dimen>
+    <dimen name="card.horizontal_margin">16dp</dimen>
+    <dimen name="card.vertical_margin">12dp</dimen>
+    <dimen name="card.title_horizontal_margin">16dp</dimen>
+    <dimen name="card.subtitle_top_margin">8dp</dimen>
+    <!-- Card icon. -->
+    <dimen name="card_icon.padding">12dp</dimen>
+    <!-- Switch. -->
+    <dimen name="switch.horizontal_padding">16dp</dimen>
+</resources>

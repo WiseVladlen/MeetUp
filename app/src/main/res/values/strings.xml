@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">MeetUp</string>
+    <!-- Login screen. -->
+    <string name="login.login_hint">Login</string>
+    <string name="login.password_hint">Password</string>
+    <string name="login.action_log_in">Log In</string>
+    <string name="authorization_error_message">Authorization error</string>
+    <!-- Calendar screen -->
+    <string name="calendar.title_day">%1$s</string>
+    <string name="calendar.title_month">%1$s</string>
+    <!-- Calendar screen. Action. -->
+    <string name="calendar.more_info_description">More info button</string>
+    <string name="calendar.add_event_description">Add event button</string>
+    <!-- Calendar screen. Period. -->
+    <string name="calendar.period_day">Day</string>
+    <string name="calendar.period_month">Month</string>
+    <!-- Calendar screen. Bottom navigation menu. -->
+    <string name="bottom_navigation_menu.today">Today</string>
+    <string name="bottom_navigation_menu.room_list">Rooms</string>
+    <string name="bottom_navigation_menu.event_list">Events</string>
+    <!-- Room screen. -->
+    <string name="room.done">Done</string>
+    <!-- Edit room screen. -->
+    <string name="edit_room.title">Edit room</string>
+    <string name="edit_room.name_hint">Room name</string>
+    <string name="edit_room.delete">Delete</string>
+    <string name="edit_room.done">Done</string>
+    <!-- Add room screen. -->
+    <string name="add_room.title">Add room</string>
+    <string name="add_room.name_hint">Room name</string>
+    <string name="add_room.done">Done</string>
+    <!-- Room list screen. -->
+    <string name="room_list.title">Room list</string>
+    <string name="room_list.add">Add</string>
+    <string name="room_list.no_results_message">No results</string>
+    <!-- Add event screen. -->
+    <string name="add_event.event_title_hint">Add title</string>
+    <string name="add_event.done">Done</string>
+    <string name="add_event.all_day">All-day</string>
+    <!-- Event card layout. -->
+    <string name="event_card.title">%1$s • %2$s</string>
+    <!-- Event details screen. -->
+    <string name="event_details.edit_description">Edit button</string>
+    <string name="event_details.delete">Delete</string>
+    <!-- Manage participant list screen. -->
+    <string name="manage_participant_list.title">Select participants</string>
+    <string name="manage_participant_list.done">Done</string>
+    <string name="manage_participant_list.hint">Add people</string>
+    <string name="manage_participant_list.no_results_message">No results</string>
+    <!-- People card layout. -->
+    <string name="people_card.avatar_description">People avatar</string>
+    <string name="people_card.delete_people_description">Delete people</string>
+    <!-- Event list screen. -->
+    <string name="event_list.title">Event list</string>
+    <!-- Participant list layout. -->
+    <string name="participant_list.title">Participants</string>
+    <!-- Location layout. -->
+    <string name="location.hint">Add location</string>
+    <!-- Select room screen. -->
+    <string name="select_room.title">Select a room</string>
+    <string name="select_room.done">Done</string>
+    <string name="select_room.no_results_message">No results</string>
+</resources>

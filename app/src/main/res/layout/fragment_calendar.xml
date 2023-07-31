@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/day_button"
+                android:layout_width="@dimen/radio_button.width"
+                android:layout_height="36dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/calendar.period_day"
+                android:textColor="@drawable/radio_flat_text_selector" />
+
+            <RadioButton
+                android:id="@+id/month_button"
+                android:layout_width="@dimen/radio_button.width"
+                android:layout_height="36dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="@string/calendar.period_month"
+                android:textColor="@drawable/radio_flat_text_selector" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/add_button"
+                android:layout_width="@dimen/image_button.width"
+                android:layout_height="@dimen/image_button.height"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/calendar.add_event_description"
+                android:src="@drawable/ic_baseline_add" />
+
+            <ImageButton
+                android:id="@+id/properties_button"
+                android:layout_width="@dimen/image_button.width"
+                android:layout_height="@dimen/image_button.height"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/calendar.more_info_description"
+                android:src="@drawable/ic_baseline_more_vertical" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <com.kizitonwose.calendar.view.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:cv_dayViewResource="@layout/calendar_day_layout"
+        app:cv_monthHeaderResource="@layout/calendar_day_titles_container"
+        app:cv_orientation="horizontal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/events_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</LinearLayout>
