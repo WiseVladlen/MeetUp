@@ -32,6 +32,7 @@ class AuthorizationFragment : Fragment(R.layout.fragment_login) {
 
     override fun onAttach(context: Context) {
         MainApplication.INSTANCE.mainComponent.inflate(this)
+
         super.onAttach(context)
     }
 
@@ -47,12 +48,14 @@ class AuthorizationFragment : Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initViews()
         observeModel()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+
         _binding = null
     }
 
@@ -65,13 +68,11 @@ class AuthorizationFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun observeModel() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.authorizationProcessLiveData.observe(viewLifecycleOwner) { authResult ->
-                if (authResult) {
-                    navigateToMainScreen()
-                } else {
-                    Toast.makeText(requireContext(), authorizationErrorMessage, Toast.LENGTH_SHORT).show()
-                }
+        viewModel.authorizationProcessLiveData.observe(viewLifecycleOwner) { authResult ->
+            if (authResult) {
+                navigateToMainScreen()
+            } else {
+                Toast.makeText(requireContext(), authorizationErrorMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }

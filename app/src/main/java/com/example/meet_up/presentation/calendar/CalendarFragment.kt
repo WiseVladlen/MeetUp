@@ -12,6 +12,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.meet_up.MainApplication
 import com.example.meet_up.R
 import com.example.meet_up.databinding.FragmentCalendarBinding
+import com.example.meet_up.presentation.bottomNavigation.BottomNavigationFragmentDirections
 import com.example.meet_up.presentation.calendar.calendarEvents.DayBinder
 import com.example.meet_up.presentation.calendar.calendarEvents.MonthsHeaderBinder
 import com.example.meet_up.presentation.calendar.dayEventsAdapter.EventAdapter
@@ -44,7 +45,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             setOnMenuItemClickListener {
                 return@setOnMenuItemClickListener when (it.itemId) {
                     R.id.menu_item_log_out -> {
-                        requireActivity().findNavController(R.id.main_container).navigateUp()
+                        requireActivity().findNavController(R.id.main_container).run {
+                            navigate(BottomNavigationFragmentDirections.actionBottomNavigationFragmentToAuthorizationFragment())
+                        }
                         true
                     }
                     else -> false
