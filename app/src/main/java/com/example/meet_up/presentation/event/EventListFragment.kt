@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.example.meet_up.databinding.FragmentEventListBinding
 import com.example.meet_up.presentation.event.adapter.EventListDelegationAdapter
 import com.example.meet_up.presentation.event.adapter.EventListItem
 import com.example.meet_up.tools.launchWhenCreated
-import com.example.meet_up.tools.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 import java.time.ZoneId
 import javax.inject.Inject
@@ -86,6 +84,6 @@ class EventListFragment: Fragment(R.layout.fragment_event_list) {
     }
 
     private fun onEventItemClick(item: EventListItem.EventItem) {
-        //navController.navigate(EventListFragmentDirections.actionEventListFragmentToEditEventFragment(item.event.id))
+        navController.navigate(EventListFragmentDirections.actionEventListFragmentToEditEventFragment(item.event.id))
     }
 }

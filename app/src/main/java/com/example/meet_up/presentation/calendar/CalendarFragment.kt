@@ -19,9 +19,7 @@ import com.example.meet_up.tools.hide
 import com.example.meet_up.tools.launchWhenStarted
 import com.example.meet_up.tools.show
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 import javax.inject.Inject
@@ -108,16 +106,14 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun observeModel() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            calendarViewModel.loadEventsByDay().onEach { eventsList ->
-                eventAdapter.submitList(eventsList)
-            }.launchWhenStarted(lifecycleScope)
+        calendarViewModel.loadEventsByDay().onEach { eventsList ->
+            eventAdapter.submitList(eventsList)
+        }.launchWhenStarted(lifecycleScope)
 
-            calendarViewModel.loadDaysWithEvents().onEach { days ->
-                dayBinder.updateDaysWithEvents(days)
-                binding.calendarView.notifyCalendarChanged()
-            }.launchWhenStarted(lifecycleScope)
-        }
+        calendarViewModel.loadDaysWithEvents().onEach { days ->
+            dayBinder.updateDaysWithEvents(days)
+            binding.calendarView.notifyCalendarChanged()
+        }.launchWhenStarted(lifecycleScope)
     }
 
     private fun onEventClick(eventId: String) {
@@ -127,7 +123,11 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private fun onDayClick(date: LocalDate) {
         if (calendarViewModel.updateSelectedDay(date)) {
             dayBinder.updateSelectedDay(date)
-            binding.calendarView.notifyCalendarChanged()
+
+            binding.apply {
+                calendarView.notifyCalendarChanged()
+                dayButton.performClick()
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -25,8 +26,10 @@ import com.example.meet_up.tools.launchWhenCreated
 import com.example.meet_up.tools.show
 import com.example.meet_up.tools.toFullFormat
 import com.example.meet_up.tools.toShortFormat
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import java.time.Duration
 import java.util.Calendar
 import javax.inject.Inject
@@ -86,7 +89,7 @@ class EditEventFragment : Fragment(R.layout.fragment_manage_event) {
 
     private fun observeModel() {
         viewModel.eventFlow
-            .onSubscription { viewModel.requestEvent(eventId) }
+            .onStart { viewModel.requestEvent(eventId) }
             .onEach { event ->
                 binding.apply {
                     editTextTitle.setText(event.title)
@@ -216,7 +219,6 @@ class EditEventFragment : Fragment(R.layout.fragment_manage_event) {
             }
 
             locationCard.root.apply {
-                text = manageEventViewModel.room?.title ?: getString(R.string.location_hint)
                 setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_location, 0, 0, 0)
 
                 setOnClickListener {
@@ -231,13 +233,17 @@ class EditEventFragment : Fragment(R.layout.fragment_manage_event) {
             }
 
             textViewDone.setOnClickListener {
-                viewModel.update(
-                    eventId = eventId,
-                    title = editTextTitle.text.toString(),
-                    users = manageEventViewModel.temporaryParticipantList,
-                    roomModel = manageEventViewModel.room,
-                    isAllDay = allDayCard.modeSwitch.isChecked,
-                )
+                lifecycleScope.launch {
+                    manageEventViewModel.roomFlow.firstOrNull().let { room ->
+                        viewModel.update(
+                            eventId = eventId,
+                            title = editTextTitle.text.toString(),
+                            users = manageEventViewModel.temporaryParticipantList,
+                            roomModel = room,
+                            isAllDay = allDayCard.modeSwitch.isChecked,
+                        )
+                    }
+                }
             }
         }
     }

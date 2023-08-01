@@ -4,102 +4,84 @@
     android:id="@+id/menu_nav_graph"
     app:startDestination="@id/navigation_calendar">
 
-    <navigation
+    <fragment
         android:id="@+id/navigation_event_list"
-        app:startDestination="@id/eventListFragment">
+        android:name="com.example.meet_up.presentation.event.EventListFragment"
+        android:label="EventsFragment">
+        <action
+            android:id="@+id/action_eventListFragment_to_editEventFragment"
+            app:destination="@id/editEventFragment" />
+    </fragment>
 
-        <fragment
-            android:id="@+id/eventListFragment"
-            android:name="com.example.meet_up.presentation.event.EventListFragment"
-            android:label="EventsFragment">
-            <action
-                android:id="@+id/action_eventListFragment_to_editEventFragment"
-                app:destination="@id/editEventFragment" />
-        </fragment>
+    <fragment
+        android:id="@+id/createEventFragment"
+        android:name="com.example.meet_up.presentation.event.create.CreateEventFragment"
+        android:label="CreateEventFragment">
+        <action
+            android:id="@+id/action_createEventFragment_to_manageParticipantListFragment"
+            app:destination="@id/manageParticipantListFragment" />
+        <action
+            android:id="@+id/action_createEventFragment_to_selectRoomFragment"
+            app:destination="@id/selectRoomFragment" />
+    </fragment>
 
-    </navigation>
+    <fragment
+        android:id="@+id/selectRoomFragment"
+        android:name="com.example.meet_up.presentation.event.select_room.SelectRoomFragment"
+        android:label="SelectRoomFragment" />
 
-    <navigation
+    <fragment
         android:id="@+id/navigation_calendar"
-        app:startDestination="@id/calendarFragment">
+        android:name="com.example.meet_up.presentation.calendar.CalendarFragment"
+        android:label="CalendarFragment">
+        <action
+            android:id="@+id/action_calendarFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_editEventFragment"
+            app:destination="@id/editEventFragment" />
+    </fragment>
 
-        <fragment
-            android:id="@+id/createEventFragment"
-            android:name="com.example.meet_up.presentation.event.create.CreateEventFragment"
-            android:label="CreateEventFragment">
-            <action
-                android:id="@+id/action_createEventFragment_to_manageParticipantListFragment"
-                app:destination="@id/manageParticipantListFragment" />
-            <action
-                android:id="@+id/action_createEventFragment_to_selectRoomFragment"
-                app:destination="@id/selectRoomFragment" />
-        </fragment>
+    <fragment
+        android:id="@+id/manageParticipantListFragment"
+        android:name="com.example.meet_up.presentation.event.manage_participant_list.ManageParticipantListFragment"
+        android:label="ManageParticipantListFragment" />
 
-        <fragment
-            android:id="@+id/selectRoomFragment"
-            android:name="com.example.meet_up.presentation.event.select_room.SelectRoomFragment"
-            android:label="SelectRoomFragment" />
+    <fragment
+        android:id="@+id/editEventFragment"
+        android:name="com.example.meet_up.presentation.event.edit.EditEventFragment"
+        android:label="EditEventFragment">
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editEventFragment_to_manageParticipantListFragment"
+            app:destination="@id/manageParticipantListFragment" />
+        <action
+            android:id="@+id/action_editEventFragment_to_selectRoomFragment"
+            app:destination="@id/selectRoomFragment" />
+    </fragment>
 
-        <fragment
-            android:id="@+id/calendarFragment"
-            android:name="com.example.meet_up.presentation.calendar.CalendarFragment"
-            android:label="CalendarFragment">
-            <action
-                android:id="@+id/action_calendarFragment_to_createEventFragment"
-                app:destination="@id/createEventFragment" />
-            <action
-                android:id="@+id/action_calendarFragment_to_editEventFragment"
-                app:destination="@id/editEventFragment" />
-        </fragment>
+    <fragment
+        android:id="@+id/addRoomFragment"
+        android:name="com.example.meet_up.presentation.room.create.AddRoomFragment"
+        android:label="AddRoomFragment" />
 
-        <fragment
-            android:id="@+id/manageParticipantListFragment"
-            android:name="com.example.meet_up.presentation.event.manage_participant_list.ManageParticipantListFragment"
-            android:label="ManageParticipantListFragment" />
-
-        <fragment
-            android:id="@+id/editEventFragment"
-            android:name="com.example.meet_up.presentation.event.edit.EditEventFragment"
-            android:label="EditEventFragment">
-            <argument
-                android:name="eventId"
-                app:argType="string" />
-            <action
-                android:id="@+id/action_editEventFragment_to_manageParticipantListFragment"
-                app:destination="@id/manageParticipantListFragment" />
-            <action
-                android:id="@+id/action_editEventFragment_to_selectRoomFragment"
-                app:destination="@id/selectRoomFragment" />
-        </fragment>
-
-    </navigation>
-
-    <navigation
+    <fragment
         android:id="@+id/navigation_room_list"
-        app:startDestination="@id/roomListFragment">
+        android:name="com.example.meet_up.presentation.room.RoomListFragment"
+        android:label="RoomListFragment">
+        <action
+            android:id="@+id/action_navigation_roomListFragment_to_addRoomFragment"
+            app:destination="@id/addRoomFragment" />
+        <action
+            android:id="@+id/action_navigation_roomListFragment_to_editRoomFragment"
+            app:destination="@id/editRoomFragment" />
+    </fragment>
 
-        <fragment
-            android:id="@+id/addRoomFragment"
-            android:name="com.example.meet_up.presentation.room.create.AddRoomFragment"
-            android:label="AddRoomFragment" />
-
-        <fragment
-            android:id="@+id/roomListFragment"
-            android:name="com.example.meet_up.presentation.room.RoomListFragment"
-            android:label="RoomListFragment">
-            <action
-                android:id="@+id/action_navigation_roomListFragment_to_addRoomFragment"
-                app:destination="@id/addRoomFragment" />
-            <action
-                android:id="@+id/action_navigation_roomListFragment_to_editRoomFragment"
-                app:destination="@id/editRoomFragment" />
-        </fragment>
-
-        <fragment
-            android:id="@+id/editRoomFragment"
-            android:name="com.example.meet_up.presentation.room.edit.EditRoomFragment"
-            android:label="EditRoomFragment" />
-
-    </navigation>
+    <fragment
+        android:id="@+id/editRoomFragment"
+        android:name="com.example.meet_up.presentation.room.edit.EditRoomFragment"
+        android:label="EditRoomFragment" />
 
 </navigation>

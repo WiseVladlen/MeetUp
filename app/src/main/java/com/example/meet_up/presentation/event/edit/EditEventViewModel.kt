@@ -21,7 +21,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
@@ -42,7 +45,10 @@ class EditEventViewModel(
     private val _onErrorFlow = MutableSharedFlow<String>(0, 1, BufferOverflow.DROP_OLDEST)
     private val _onSuccessFlow = MutableSharedFlow<Unit>(0, 1, BufferOverflow.DROP_OLDEST)
 
-    val eventFlow = _eventFlow.asSharedFlow()
+    val eventFlow = _eventFlow.take(1).shareIn(
+        viewModelScope,
+        SharingStarted.Lazily
+    )
 
     val onErrorFlow = _onErrorFlow.asSharedFlow()
     val onSuccessFlow = _onSuccessFlow.asSharedFlow()

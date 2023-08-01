@@ -11,17 +11,11 @@ import kotlinx.coroutines.launch
 
 class ManageEventViewModel : ViewModel() {
 
-    private val _roomFlow = MutableSharedFlow<RoomModel>(0, 1, BufferOverflow.DROP_OLDEST)
+    private val _roomFlow = MutableSharedFlow<RoomModel>(1, 1, BufferOverflow.DROP_OLDEST)
     val roomFlow = _roomFlow.asSharedFlow()
-
-    private var _room: RoomModel? = null
-
-    val room: RoomModel?
-        get() = _room
 
     fun pushRoom(roomModel: RoomModel) {
         viewModelScope.launch {
-            _room = roomModel
             _roomFlow.emit(roomModel)
         }
     }

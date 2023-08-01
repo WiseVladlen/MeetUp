@@ -51,7 +51,7 @@ class EventRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteUserFromEvent(userLogin: String, eventId: String) {
-        dataBase.eventDao.deleteUserFromEvent(EventUser(eventId = eventId, userLogin = userLogin))
+        dataBase.eventDao.deleteUserFromEvent(eventId, userLogin)
     }
 
     override fun getEventsByDate(startDate: Date, endDate: Date): Flow<List<EventModel>> {

@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -22,7 +23,10 @@ import com.example.meet_up.tools.launchWhenCreated
 import com.example.meet_up.tools.show
 import com.example.meet_up.tools.toFullFormat
 import com.example.meet_up.tools.toShortFormat
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -39,11 +43,13 @@ class CreateEventFragment : Fragment(R.layout.fragment_manage_event) {
     private val binding by viewBinding<FragmentManageEventBinding>()
 
     private val onStartDateSetListener = OnDateSetListener { _, year, month, dayOfMonth ->
-        binding.startDateTimeCard.textViewDate.text = viewModel.updateStartDate(year, month, dayOfMonth)
+        binding.startDateTimeCard.textViewDate.text =
+            viewModel.updateStartDate(year, month, dayOfMonth)
     }
 
     private val onStartTimeSetListener = OnTimeSetListener { _, hourOfDay, minute ->
-        binding.startDateTimeCard.textViewTime.text = viewModel.updateStartDateDayTime(hourOfDay, minute)
+        binding.startDateTimeCard.textViewTime.text =
+            viewModel.updateStartDateDayTime(hourOfDay, minute)
     }
 
     private val onEndDateSetListener = OnDateSetListener { _, year, month, dayOfMonth ->
@@ -51,7 +57,8 @@ class CreateEventFragment : Fragment(R.layout.fragment_manage_event) {
     }
 
     private val onEndTimeSetListener = OnTimeSetListener { _, hourOfDay, minute ->
-        binding.endDateTimeCard.textViewTime.text = viewModel.updateEndDateDayTime(hourOfDay, minute)
+        binding.endDateTimeCard.textViewTime.text =
+            viewModel.updateEndDateDayTime(hourOfDay, minute)
     }
 
     override fun onAttach(context: Context) {
@@ -171,8 +178,18 @@ class CreateEventFragment : Fragment(R.layout.fragment_manage_event) {
             }
 
             locationCard.root.apply {
-                text = manageEventViewModel.room?.title ?: getString(R.string.location_hint)
-                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_location, 0, 0, 0)
+                lifecycleScope.launch {
+                    manageEventViewModel.roomFlow.firstOrNull().let { room ->
+                        text = room?.title ?: getString(R.string.location_hint)
+                    }
+                }
+
+                setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_baseline_location,
+                    0,
+                    0,
+                    0
+                )
 
                 setOnClickListener {
                     navController.navigate(CreateEventFragmentDirections.actionCreateEventFragmentToSelectRoomFragment())
@@ -180,12 +197,16 @@ class CreateEventFragment : Fragment(R.layout.fragment_manage_event) {
             }
 
             textViewDone.setOnClickListener {
-                viewModel.create(
-                    title = editTextTitle.text.toString(),
-                    users = manageEventViewModel.temporaryParticipantList,
-                    roomModel = manageEventViewModel.room,
-                    isAllDay = allDayCard.modeSwitch.isChecked,
-                )
+                lifecycleScope.launch {
+                    manageEventViewModel.roomFlow.firstOrNull().let {
+                        viewModel.create(
+                            title = editTextTitle.text.toString(),
+                            users = manageEventViewModel.temporaryParticipantList,
+                            roomModel = it,
+                            isAllDay = allDayCard.modeSwitch.isChecked,
+                        )
+                    }
+                }
             }
         }
     }
