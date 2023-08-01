@@ -15,7 +15,7 @@ import com.example.meet_up.MainApplication
 import com.example.meet_up.R
 import com.example.meet_up.databinding.FragmentSelectRoomBinding
 import com.example.meet_up.domain.models.RoomModel
-import com.example.meet_up.presentation.event.ManageEventViewModel
+import com.example.meet_up.presentation.event.EventConfigViewModel
 import com.example.meet_up.presentation.room.adapter.RoomListAdapter
 import com.example.meet_up.tools.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
@@ -27,7 +27,7 @@ class SelectRoomFragment : Fragment(R.layout.fragment_select_room) {
     lateinit var selectRoomViewModelFactory: SelectRoomViewModel.SelectRoomViewModelFactory
     private val viewModel by viewModels<SelectRoomViewModel> { selectRoomViewModelFactory }
 
-    private val manageEventViewModel by navGraphViewModels<ManageEventViewModel>(R.id.menu_nav_graph)
+    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.menu_nav_graph)
 
     private val roomListAdapter = RoomListAdapter(::onRoomItemClick)
 
@@ -78,7 +78,7 @@ class SelectRoomFragment : Fragment(R.layout.fragment_select_room) {
     }
 
     private fun onRoomItemClick(roomModel: RoomModel) {
-        manageEventViewModel.pushRoom(roomModel)
+        eventConfigViewModel.pushRoom(roomModel)
         navController.navigateUp()
     }
 }

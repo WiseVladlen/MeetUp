@@ -16,12 +16,13 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
 
-class LoadEventListByDay @Inject constructor(
-    private val eventRepository: EventRepository
+class LoadEventListByDayInteractor @Inject constructor(
+    private val eventRepository: EventRepository,
 ) {
 
-    private val eventsFlow = MutableSharedFlow<List<EventModel>>(1, 1, BufferOverflow.DROP_OLDEST)
     private var eventsFlowJob: Job? = null
+
+    private val eventsFlow = MutableSharedFlow<List<EventModel>>(1, 1, BufferOverflow.DROP_OLDEST)
 
     @OptIn(DelicateCoroutinesApi::class)
     operator fun invoke(

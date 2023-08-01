@@ -79,7 +79,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             setupCalendar()
 
             addButton.setOnClickListener {
-                navController.navigate(CalendarFragmentDirections.actionCalendarFragmentToCreateEventFragment())
+                navController.navigate(CalendarFragmentDirections.actionCalendarFragmentToEditEventFragment())
             }
 
             moreButton.setOnClickListener {
@@ -138,11 +138,11 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun onEventClick(eventId: String) {
-        navController.navigate(
-            CalendarFragmentDirections.actionCalendarFragmentToEditEventFragment(
-                eventId
-            )
-        )
+        CalendarFragmentDirections.actionCalendarFragmentToEditEventFragment().apply {
+            setEventId(eventId)
+
+            navController.navigate(this)
+        }
     }
 
     private fun onDayClick(date: LocalDate) {

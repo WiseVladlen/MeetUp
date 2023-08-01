@@ -9,13 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.meet_up.MainApplication
 import com.example.meet_up.R
 import com.example.meet_up.databinding.FragmentManageParticipantListBinding
-import com.example.meet_up.presentation.event.ManageEventViewModel
+import com.example.meet_up.presentation.event.EventConfigViewModel
 import com.example.meet_up.presentation.event.manage_participant_list.adapter.NonParticipantLayoutListener
 import com.example.meet_up.presentation.event.manage_participant_list.adapter.ParticipantLayoutListener
 import com.example.meet_up.presentation.event.manage_participant_list.adapter.PeopleListDelegationAdapter
@@ -32,7 +31,7 @@ class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_particip
     lateinit var manageParticipantListViewModelFactory: ManageParticipantListViewModel.ManageParticipantListViewModelFactory
     private val viewModel by viewModels<ManageParticipantListViewModel> { manageParticipantListViewModelFactory }
 
-    private val manageEventViewModel by navGraphViewModels<ManageEventViewModel>(R.id.menu_nav_graph)
+    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.menu_nav_graph)
 
     private val participantLayoutListener = ParticipantLayoutListener {
         viewModel.removeParticipant(it.userModel)
@@ -85,7 +84,7 @@ class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_particip
             }
 
             textViewDone.setOnClickListener {
-                manageEventViewModel.pushParticipantList(viewModel.temporaryParticipantList)
+                eventConfigViewModel.pushParticipantList(viewModel.temporaryParticipantList)
                 navController.navigateUp()
             }
         }
@@ -107,7 +106,7 @@ class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_particip
             adapter = peopleListAdapter
         }
 
-        manageEventViewModel.temporaryParticipantList.let { list ->
+        eventConfigViewModel.temporaryParticipantList.let { list ->
             viewModel.initParticipants(list)
         }
     }

@@ -1,9 +1,10 @@
-package com.example.meet_up.presentation.event.edit
+package com.example.meet_up.presentation.event.manage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.data.local.UserStorage
+import com.example.meet_up.domain.interactors.CreateEventInteractor
 import com.example.meet_up.domain.models.EventModel
 import com.example.meet_up.domain.models.RoomModel
 import com.example.meet_up.domain.models.UserModel
@@ -11,6 +12,7 @@ import com.example.meet_up.domain.interactors.DeleteEventInteractor
 import com.example.meet_up.domain.interactors.LoadEventInteractor
 import com.example.meet_up.domain.interactors.UpdateEventInteractor
 import com.example.meet_up.domain.interactors.ValidateEventInteractor
+import com.example.meet_up.domain.models.EventModel.Companion.validate
 import com.example.meet_up.tools.MIN_EVENT_DURATION
 import com.example.meet_up.tools.getEndOfDayCalendar
 import com.example.meet_up.tools.getStartOfDayCalendar
@@ -30,17 +32,18 @@ import java.util.Calendar
 import javax.inject.Inject
 import javax.inject.Provider
 
-class EditEventViewModel(
+class ManageEventViewModel(
     private val loadEventInteractor: LoadEventInteractor,
     private val updateEventInteractor: UpdateEventInteractor,
+    private val createEventInteractor: CreateEventInteractor,
     private val deleteEventInteractor: DeleteEventInteractor,
     private val validateEventInteractor: ValidateEventInteractor,
 ) : ViewModel() {
 
-    private val updateJob: CompletableJob = SupervisorJob()
+    private val putJob: CompletableJob = SupervisorJob()
     private val deleteJob: CompletableJob = SupervisorJob()
 
-    private val _eventFlow = MutableSharedFlow<EventModel>(0, 1, BufferOverflow.DROP_OLDEST)
+    private val _eventFlow = MutableSharedFlow<Result<EventModel>>(0, 1, BufferOverflow.DROP_OLDEST)
 
     private val _onErrorFlow = MutableSharedFlow<String>(0, 1, BufferOverflow.DROP_OLDEST)
     private val _onSuccessFlow = MutableSharedFlow<Unit>(0, 1, BufferOverflow.DROP_OLDEST)
@@ -64,31 +67,37 @@ class EditEventViewModel(
         }
     }
 
-    fun update(
+    fun put(
         eventId: String,
         title: String,
         users: List<UserModel>,
         roomModel: RoomModel?,
         isAllDay: Boolean,
     ) {
-        viewModelScope.launch(Dispatchers.IO + updateJob) {
-            roomModel?.let {
+        viewModelScope.launch(Dispatchers.IO + putJob) {
+            roomModel?.let { room ->
                 val event = EventModel(
-                    id = eventId,
+                    id = eventId.validate(),
                     title = title,
                     startDate = (if (isAllDay) startDate.getStartOfDayCalendar() else startDate).time,
                     endDate = (if (isAllDay) startDate.getEndOfDayCalendar() else endDate).time,
                     users = users,
-                    room = roomModel,
+                    room = room,
                     organizer = UserStorage.user.login,
                 )
 
                 validateEventInteractor.invoke(event)
                     .onFailure { _onErrorFlow.emit(it.message.toString()) }
                     .onSuccess {
-                        updateEventInteractor.invoke(event)
-                            .onFailure { _onErrorFlow.emit(it.message.toString()) }
-                            .onSuccess {  _onSuccessFlow.emit(Unit) }
+                        if (event.id == eventId) {
+                            updateEventInteractor.invoke(event)
+                                .onFailure { _onErrorFlow.emit(it.message.toString()) }
+                                .onSuccess { _onSuccessFlow.emit(Unit) }
+                        } else {
+                            createEventInteractor.invoke(event)
+                                .onFailure { _onErrorFlow.emit(it.message.toString()) }
+                                .onSuccess { _onSuccessFlow.emit(Unit) }
+                        }
                     }
             } ?: _onErrorFlow.emit(NO_ROOM_SELECTED)
         }
@@ -130,7 +139,7 @@ class EditEventViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        updateJob.cancel()
+        putJob.cancel()
         deleteJob.cancel()
     }
 
@@ -138,17 +147,19 @@ class EditEventViewModel(
         private const val NO_ROOM_SELECTED = "No room selected"
     }
 
-    class EditEventViewModelFactory @Inject constructor(
+    class ManageEventViewModelFactory @Inject constructor(
         private val loadEventInteractor: Provider<LoadEventInteractor>,
         private val updateEventInteractor: Provider<UpdateEventInteractor>,
+        private val createEventInteractor: Provider<CreateEventInteractor>,
         private val deleteEventInteractor: Provider<DeleteEventInteractor>,
         private val validateEventInteractor: Provider<ValidateEventInteractor>,
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return EditEventViewModel(
+            return ManageEventViewModel(
                 loadEventInteractor.get(),
                 updateEventInteractor.get(),
+                createEventInteractor.get(),
                 deleteEventInteractor.get(),
                 validateEventInteractor.get(),
             ) as T

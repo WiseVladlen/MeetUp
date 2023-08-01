@@ -1,4 +1,4 @@
-package com.example.meet_up.presentation.event.edit
+package com.example.meet_up.presentation.event.manage
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -18,7 +17,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.meet_up.MainApplication
 import com.example.meet_up.R
 import com.example.meet_up.databinding.FragmentManageEventBinding
-import com.example.meet_up.presentation.event.ManageEventViewModel
+import com.example.meet_up.presentation.event.EventConfigViewModel
 import com.example.meet_up.tools.copyFrom
 import com.example.meet_up.tools.hide
 import com.example.meet_up.tools.isAllDay
@@ -26,27 +25,25 @@ import com.example.meet_up.tools.launchWhenCreated
 import com.example.meet_up.tools.show
 import com.example.meet_up.tools.toFullFormat
 import com.example.meet_up.tools.toShortFormat
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.onSubscription
 import java.time.Duration
 import java.util.Calendar
 import javax.inject.Inject
 
-class EditEventFragment : Fragment(R.layout.fragment_manage_event) {
+class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
 
     @Inject
-    lateinit var editEventViewModelFactory: EditEventViewModel.EditEventViewModelFactory
-    private val viewModel by viewModels<EditEventViewModel> { editEventViewModelFactory }
+    lateinit var manageEventViewModelFactory: ManageEventViewModel.ManageEventViewModelFactory
+    private val viewModel by viewModels<ManageEventViewModel> { manageEventViewModelFactory }
 
-    private val manageEventViewModel by navGraphViewModels<ManageEventViewModel>(R.id.menu_nav_graph)
+    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.menu_nav_graph)
 
     private val navController by lazy { requireActivity().findNavController(R.id.menu_container) }
 
     private val binding by viewBinding<FragmentManageEventBinding>()
 
-    private val args: EditEventFragmentArgs by navArgs()
+    private val args: ManageEventFragmentArgs by navArgs()
 
     private lateinit var eventId: String
 
@@ -89,35 +86,35 @@ class EditEventFragment : Fragment(R.layout.fragment_manage_event) {
 
     private fun observeModel() {
         viewModel.eventFlow
-            .onStart { viewModel.requestEvent(eventId) }
-            .onEach { event ->
-                binding.apply {
-                    editTextTitle.setText(event.title)
+            .onSubscription { viewModel.requestEvent(eventId) }
+            .onEach { result ->
+                result.onSuccess { event ->
+                    binding.apply {
+                        editTextTitle.setText(event.title)
 
-                    manageEventViewModel.pushRoom(event.room)
-                    manageEventViewModel.pushParticipantList(event.users)
+                        eventConfigViewModel.pushRoom(event.room)
+                        eventConfigViewModel.pushParticipantList(event.users)
 
-                    startDateTimeCard.apply {
-                        textViewDate.text = event.startDate.toFullFormat()
-                        textViewTime.text = event.startDate.toShortFormat()
+                        startDateTimeCard.apply {
+                            textViewDate.text = event.startDate.toFullFormat()
+                            textViewTime.text = event.startDate.toShortFormat()
+                        }
+
+                        endDateTimeCard.apply {
+                            textViewDate.text = event.endDate.toFullFormat()
+                            textViewTime.text = event.endDate.toShortFormat()
+                        }
+
+                        if (Duration.ofMillis(event.endDate.time - event.startDate.time).isAllDay()) {
+                            allDayCard.modeSwitch.isChecked = true
+                        }
+
+                        locationCard.root.text = event.room.title
+
+                        viewModel.startDate.copyFrom(Calendar.Builder().setInstant(event.startDate).build())
+                        viewModel.endDate.copyFrom(Calendar.Builder().setInstant(event.endDate).build())
                     }
-
-                    endDateTimeCard.apply {
-                        textViewDate.text = event.endDate.toFullFormat()
-                        textViewTime.text = event.endDate.toShortFormat()
-                    }
-
-                    if (Duration.ofMillis(event.endDate.time - event.startDate.time).isAllDay()) {
-                        allDayCard.modeSwitch.isChecked = true
-                    }
-
-                    viewModel.startDate.copyFrom(Calendar.Builder().setInstant(event.startDate).build())
-                    viewModel.endDate.copyFrom(Calendar.Builder().setInstant(event.endDate).build())
                 }
-        }.launchWhenCreated(viewLifecycleOwner)
-
-        manageEventViewModel.roomFlow.onEach { room ->
-            binding.locationCard.root.text = room.title
         }.launchWhenCreated(viewLifecycleOwner)
 
         viewModel.onErrorFlow.onEach { message ->
@@ -214,37 +211,42 @@ class EditEventFragment : Fragment(R.layout.fragment_manage_event) {
                 setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_peoples, 0, 0, 0)
 
                 setOnClickListener {
-                    navController.navigate(EditEventFragmentDirections.actionEditEventFragmentToManageParticipantListFragment())
+                    navController.navigate(ManageEventFragmentDirections.actionEditEventFragmentToManageParticipantListFragment())
                 }
             }
 
             locationCard.root.apply {
+                text = eventConfigViewModel.room?.title ?: getString(R.string.location_hint)
                 setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_location, 0, 0, 0)
 
                 setOnClickListener {
-                    navController.navigate(EditEventFragmentDirections.actionEditEventFragmentToSelectRoomFragment())
+                    navController.navigate(ManageEventFragmentDirections.actionEditEventFragmentToSelectRoomFragment())
                 }
             }
 
-            buttonDelete.apply {
-                show()
+            if (eventId.isNotEmpty()) {
+                buttonDelete.apply {
+                    show()
 
-                setOnClickListener { viewModel.delete(eventId) }
+                    setOnClickListener { viewModel.delete(eventId) }
+                }
             }
 
             textViewDone.setOnClickListener {
-                lifecycleScope.launch {
-                    manageEventViewModel.roomFlow.firstOrNull().let { room ->
-                        viewModel.update(
-                            eventId = eventId,
-                            title = editTextTitle.text.toString(),
-                            users = manageEventViewModel.temporaryParticipantList,
-                            roomModel = room,
-                            isAllDay = allDayCard.modeSwitch.isChecked,
-                        )
-                    }
-                }
+                viewModel.put(
+                    eventId = eventId,
+                    title = editTextTitle.text.toString(),
+                    users = eventConfigViewModel.temporaryParticipantList,
+                    roomModel = eventConfigViewModel.room,
+                    isAllDay = allDayCard.modeSwitch.isChecked,
+                )
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        eventConfigViewModel.pushParticipantList(emptyList())
     }
 }

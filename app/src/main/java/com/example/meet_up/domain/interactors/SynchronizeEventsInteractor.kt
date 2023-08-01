@@ -11,6 +11,9 @@ class SynchronizeEventsInteractor @Inject constructor(
     private val remoteEventRepository: RemoteEventRepository,
 ) {
 
+    /**
+     * PS : Yandex automatically changes the transmitted UUID, so the whole list is constantly updated.
+     */
     suspend fun invoke() {
         eventRepository.getUserEvents(UserStorage.user.login).first().let { localEvents ->
             remoteEventRepository.getEventIdList { remoteEventIds ->

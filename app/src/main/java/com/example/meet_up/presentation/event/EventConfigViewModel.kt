@@ -1,23 +1,18 @@
 package com.example.meet_up.presentation.event
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.meet_up.domain.models.RoomModel
 import com.example.meet_up.domain.models.UserModel
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
 
-class ManageEventViewModel : ViewModel() {
+class EventConfigViewModel : ViewModel() {
 
-    private val _roomFlow = MutableSharedFlow<RoomModel>(1, 1, BufferOverflow.DROP_OLDEST)
-    val roomFlow = _roomFlow.asSharedFlow()
+    private var _room: RoomModel? = null
+
+    val room: RoomModel?
+        get() = _room
 
     fun pushRoom(roomModel: RoomModel) {
-        viewModelScope.launch {
-            _roomFlow.emit(roomModel)
-        }
+        _room = roomModel
     }
 
     private val _temporaryParticipantList = mutableListOf<UserModel>()

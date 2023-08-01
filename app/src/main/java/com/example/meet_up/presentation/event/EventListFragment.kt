@@ -84,6 +84,10 @@ class EventListFragment: Fragment(R.layout.fragment_event_list) {
     }
 
     private fun onEventItemClick(item: EventListItem.EventItem) {
-        navController.navigate(EventListFragmentDirections.actionEventListFragmentToEditEventFragment(item.event.id))
+        EventListFragmentDirections.actionEventListFragmentToEditEventFragment().apply {
+            eventId = item.event.id
+
+            navController.navigate(this)
+        }
     }
 }

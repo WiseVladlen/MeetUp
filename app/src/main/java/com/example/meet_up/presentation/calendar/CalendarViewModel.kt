@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.domain.interactors.LoadDayListWithEventList
-import com.example.meet_up.domain.interactors.LoadEventListByDay
+import com.example.meet_up.domain.interactors.LoadEventListByDayInteractor
 import com.example.meet_up.presentation.calendar.adapter.EventDisplay
 import com.example.meet_up.presentation.mappers.toEventDisplay
 import com.example.meet_up.tools.toCalendar
@@ -15,14 +15,14 @@ import java.util.Calendar
 import javax.inject.Inject
 
 class CalendarViewModel(
-    private val loadEventListByDay: LoadEventListByDay,
+    private val loadEventListByDayInteractor: LoadEventListByDayInteractor,
     private val loadDayListWithEventList: LoadDayListWithEventList,
 ) : ViewModel() {
 
     private var selectedDay = Calendar.getInstance()
 
     fun loadEventsByDay(): Flow<List<EventDisplay>> {
-        return loadEventListByDay(selectedDay).map { eventModels ->
+        return loadEventListByDayInteractor(selectedDay).map { eventModels ->
             eventModels.map { eventModel -> eventModel.toEventDisplay() }
         }
     }
@@ -45,17 +45,20 @@ class CalendarViewModel(
             set(Calendar.MONTH, get(Calendar.MONTH) - 1)
         }
 
-        loadEventListByDay.updateDate(selectedDay, viewModelScope)
+        loadEventListByDayInteractor.updateDate(selectedDay, viewModelScope)
 
         return true
     }
 
     class Factory @Inject constructor(
-        private val loadEventListByDay: LoadEventListByDay,
+        private val loadEventListByDayInteractor: LoadEventListByDayInteractor,
         private val loadDayListWithEventList: LoadDayListWithEventList
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return CalendarViewModel(loadEventListByDay, loadDayListWithEventList) as T
+            return CalendarViewModel(
+                loadEventListByDayInteractor,
+                loadDayListWithEventList,
+            ) as T
         }
     }
 }
