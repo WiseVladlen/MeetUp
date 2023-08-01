@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="@string/add_event.event_title_hint" />
+                android:hint="@string/manage_event.title_hint" />
 
             <TextView
                 android:id="@+id/textView_done"
@@ -33,7 +33,7 @@
                 android:layout_marginHorizontal="@dimen/toolbar.action_button_horizontal_margin"
                 android:paddingHorizontal="@dimen/toolbar.action_button_horizontal_padding"
                 android:paddingVertical="@dimen/toolbar.action_button_vertical_padding"
-                android:text="@string/add_event.done" />
+                android:text="@string/manage_event.done" />
 
         </LinearLayout>
 
@@ -67,6 +67,13 @@
             <include
                 android:id="@+id/location_card"
                 layout="@layout/text_image_card_layout" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_delete"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button.height"
+                android:text="@string/manage_event.delete"
+                android:visibility="gone" />
 
         </LinearLayout>
 

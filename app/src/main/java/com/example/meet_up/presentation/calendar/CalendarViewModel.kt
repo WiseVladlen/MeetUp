@@ -16,8 +16,9 @@ import javax.inject.Inject
 
 class CalendarViewModel(
     private val getEventsByDay: GetEventsByDay,
-    private val getDaysWithEvents: GetDaysWithEvents
+    private val getDaysWithEvents: GetDaysWithEvents,
 ) : ViewModel() {
+
     private var selectedDay = Calendar.getInstance()
 
     fun loadEventsByDay(): Flow<List<EventDisplay>> {

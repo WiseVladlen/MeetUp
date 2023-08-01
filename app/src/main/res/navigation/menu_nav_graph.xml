@@ -57,6 +57,21 @@
             android:name="com.example.meet_up.presentation.event.manage_participant_list.ManageParticipantListFragment"
             android:label="ManageParticipantListFragment" />
 
+        <fragment
+            android:id="@+id/editEventFragment"
+            android:name="com.example.meet_up.presentation.event.edit.EditEventFragment"
+            android:label="EditEventFragment">
+            <argument
+                android:name="eventId"
+                app:argType="string" />
+            <action
+                android:id="@+id/action_editEventFragment_to_manageParticipantListFragment"
+                app:destination="@id/manageParticipantListFragment" />
+            <action
+                android:id="@+id/action_editEventFragment_to_selectRoomFragment"
+                app:destination="@id/selectRoomFragment" />
+        </fragment>
+
     </navigation>
 
     <navigation
@@ -86,20 +101,5 @@
             android:label="EditRoomFragment" />
 
     </navigation>
-
-    <fragment
-        android:id="@+id/editEventFragment"
-        android:name="com.example.meet_up.presentation.event.edit.EditEventFragment"
-        android:label="EditEventFragment">
-        <argument
-            android:name="eventId"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_editEventFragment_to_manageParticipantListFragment"
-            app:destination="@id/manageParticipantListFragment" />
-        <action
-            android:id="@+id/action_editEventFragment_to_selectRoomFragment"
-            app:destination="@id/selectRoomFragment" />
-    </fragment>
 
 </navigation>

@@ -3,6 +3,7 @@ package com.example.meet_up.domain.usecases
 import com.example.meet_up.domain.models.EventModel
 import com.example.meet_up.tools.MAX_EVENT_DURATION
 import com.example.meet_up.tools.MIN_EVENT_DURATION
+import com.example.meet_up.tools.daysToSeconds
 import java.lang.Exception
 import java.time.Duration
 import javax.inject.Inject
@@ -16,9 +17,9 @@ class ValidateEventInteractor @Inject constructor() {
             Result.failure(Exception(BLANK_TITLE))
         } else if (eventModel.endDate.before(eventModel.startDate)) {
             Result.failure(Exception(END_DATE_BEFORE_START_DATE))
-        } else if (duration.toDays().toInt() > MIN_EVENT_DURATION) {
+        } else if (duration.seconds.compareTo(MAX_EVENT_DURATION.daysToSeconds()) == 1) {
             Result.failure(Exception(EVENT_DURATION_MORE_THAN_POSSIBLE))
-        } else if (duration.toMinutes() < MAX_EVENT_DURATION) {
+        } else if (duration.toMinutes() < MIN_EVENT_DURATION) {
             Result.failure(Exception(EVENT_DURATION_LESS_THAN_POSSIBLE))
         } else {
             Result.success(Unit)

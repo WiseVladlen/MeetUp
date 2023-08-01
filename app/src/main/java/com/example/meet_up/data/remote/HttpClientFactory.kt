@@ -14,13 +14,13 @@ class HttpClientFactory {
             password = UserStorage.user.password
         )
 
-    private lateinit var _okHttpClient: OkHttpClient
+    private lateinit var _client: OkHttpClient
 
-    val okHttpClient: OkHttpClient
-        get() = _okHttpClient
+    val client: OkHttpClient
+        get() = _client
 
     fun create() {
-        _okHttpClient = OkHttpClient.Builder()
+        _client = OkHttpClient.Builder()
             .followRedirects(false)
             .authenticator(authHandler)
             .addNetworkInterceptor(authHandler)

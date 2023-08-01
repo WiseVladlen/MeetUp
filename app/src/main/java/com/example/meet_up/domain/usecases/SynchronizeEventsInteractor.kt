@@ -3,6 +3,7 @@ package com.example.meet_up.domain.usecases
 import com.example.meet_up.data.local.UserStorage
 import com.example.meet_up.domain.repositories.EventRepository
 import com.example.meet_up.domain.repositories.RemoteEventRepository
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class SynchronizeEventsInteractor @Inject constructor(
@@ -11,14 +12,18 @@ class SynchronizeEventsInteractor @Inject constructor(
 ) {
 
     suspend fun invoke() {
-        eventRepository.getUserEvents(UserStorage.user.login).collect { localEvents ->
-            remoteEventRepository.getEventIdList { eventIdList ->
-                localEvents.forEach { localEvent ->
-                    if (eventIdList.contains(localEvent.id)) {
-                        remoteEventRepository.putEvent(localEvent)
-                    } else {
-                        remoteEventRepository.deleteEvent(localEvent.id)
+        eventRepository.getUserEvents(UserStorage.user.login).first().let { localEvents ->
+            remoteEventRepository.getEventIdList { remoteEventIds ->
+                val localEventIds = localEvents.map { it.id }
+
+                remoteEventIds.forEach { remoteEventId ->
+                    if (!localEventIds.contains(remoteEventId)) {
+                        remoteEventRepository.deleteEvent(remoteEventId)
                     }
+                }
+
+                localEvents.forEach { localEvent ->
+                    remoteEventRepository.putEvent(localEvent)
                 }
             }
         }

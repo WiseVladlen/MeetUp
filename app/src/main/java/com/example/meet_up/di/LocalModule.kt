@@ -5,7 +5,6 @@ import com.example.meet_up.data.local.DataBase
 import com.example.meet_up.data.remote.HttpClientFactory
 import dagger.Module
 import dagger.Provides
-import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @Module
@@ -18,7 +17,7 @@ class LocalModule {
 
     @Singleton
     @Provides
-    fun getHttpClient(): OkHttpClient {
-        return HttpClientFactory().okHttpClient
+    fun getHttpClientFactory(): HttpClientFactory {
+        return HttpClientFactory()
     }
 }

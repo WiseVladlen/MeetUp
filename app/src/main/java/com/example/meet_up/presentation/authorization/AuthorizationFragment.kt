@@ -18,15 +18,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AuthorizationFragment : Fragment(R.layout.fragment_login) {
+
     @Inject
     lateinit var viewModelFactory: AuthorizationViewModel.AuthorizationViewModelFactory
 
     private var _binding: FragmentLoginBinding? = null
-    private val viewModel: AuthorizationViewModel by viewModels {
-        viewModelFactory
-    }
+    private val viewModel: AuthorizationViewModel by viewModels { viewModelFactory }
+
     private val binding
         get() = _binding!!
+
     private val authorizationErrorMessage by lazy { requireContext().getString(R.string.authorization_error_message) }
 
     override fun onAttach(context: Context) {

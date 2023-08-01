@@ -2,6 +2,7 @@ package com.example.meet_up.di
 
 import android.content.Context
 import com.example.meet_up.presentation.authorization.AuthorizationFragment
+import com.example.meet_up.presentation.bottomNavigation.BottomNavigationFragment
 import com.example.meet_up.presentation.calendar.CalendarFragment
 import com.example.meet_up.presentation.event.EventListFragment
 import com.example.meet_up.presentation.event.create.CreateEventFragment
@@ -19,6 +20,7 @@ import javax.inject.Singleton
 @Component(modules = [MainModule::class])
 interface MainComponent {
     fun inflate(fragment: AuthorizationFragment)
+    fun inflate(fragment: BottomNavigationFragment)
     fun inflate(fragment: CalendarFragment)
     fun inflate(fragment: RoomListFragment)
     fun inflate(fragment: AddRoomFragment)

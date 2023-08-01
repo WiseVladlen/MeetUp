@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.domain.models.UserModel
 import com.example.meet_up.domain.usecases.LoadFilteredUserListInteractor
-import com.example.meet_up.domain.usecases.LoadParticipantListInteractor
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -19,7 +18,6 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class ManageParticipantListViewModel(
-    private val loadParticipantListInteractor: LoadParticipantListInteractor,
     private val loadFilteredUserListInteractor: LoadFilteredUserListInteractor,
 ) : ViewModel() {
 
@@ -71,8 +69,6 @@ class ManageParticipantListViewModel(
         }
     }
 
-    suspend fun getParticipantList() = loadParticipantListInteractor.invoke("")
-
     private suspend fun collectUsersByQuery() {
         searchQuery.collectLatest { query ->
             loadFilteredUserListInteractor.invoke(query, temporaryParticipantList)
@@ -86,15 +82,12 @@ class ManageParticipantListViewModel(
         loadJob.cancel()
     }
 
-    @Suppress("UNCHECKED_CAST")
     class ManageParticipantListViewModelFactory @Inject constructor(
-        private val loadParticipantListInteractor: Provider<LoadParticipantListInteractor>,
         private val loadFilteredUserListInteractor: Provider<LoadFilteredUserListInteractor>,
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ManageParticipantListViewModel(
-                loadParticipantListInteractor.get(),
                 loadFilteredUserListInteractor.get(),
             ) as T
         }

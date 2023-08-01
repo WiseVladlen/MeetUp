@@ -14,12 +14,12 @@ import biweekly.property.Location
 import biweekly.property.Organizer
 import biweekly.property.Summary
 import com.example.meet_up.data.local.UserStorage
+import com.example.meet_up.data.remote.HttpClientFactory
 import com.example.meet_up.domain.models.EventModel
 import com.example.meet_up.domain.repositories.RemoteEventRepository
 import com.example.meet_up.tools.toFilename
 import com.example.meet_up.tools.toUsername
 import okhttp3.HttpUrl.Companion.toHttpUrl
-import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.BufferedReader
 import java.util.Calendar
@@ -29,7 +29,7 @@ import javax.inject.Inject
 private val TAG = RemoteEventRepositoryImpl::class.java.simpleName
 
 class RemoteEventRepositoryImpl @Inject constructor(
-    private val okHttpClient: OkHttpClient,
+    private val httpClientFactory: HttpClientFactory,
 ) : RemoteEventRepository {
 
     override fun putEvent(eventModel: EventModel) {
@@ -57,7 +57,7 @@ class RemoteEventRepositoryImpl @Inject constructor(
             timezoneInfo.defaultTimezone = TimezoneAssignment(timeZone, VTimezone(timeZone.id))
         }
 
-        DavCollection(okHttpClient, getFileLocation(eventModel.id).toHttpUrl()).run {
+        DavCollection(httpClientFactory.client, getFileLocation(eventModel.id).toHttpUrl()).run {
             put(calendar.write().toRequestBody()) { response ->
                 Log.i(TAG, response.message)
             }
@@ -65,7 +65,7 @@ class RemoteEventRepositoryImpl @Inject constructor(
     }
 
     override fun deleteEvent(eventId: String) {
-        DavCollection(okHttpClient, getFileLocation(eventId).toHttpUrl()).run {
+        DavCollection(httpClientFactory.client, getFileLocation(eventId).toHttpUrl()).run {
             delete { response ->
                 Log.i(TAG, response.message)
             }
@@ -73,7 +73,7 @@ class RemoteEventRepositoryImpl @Inject constructor(
     }
 
     override fun getEventIdList(callback: (pathList: List<String>) -> Unit) {
-        DavCollection(okHttpClient, getFolderLocation().toHttpUrl()).run {
+        DavCollection(httpClientFactory.client, getFolderLocation().toHttpUrl()).run {
             get("/", null) { response ->
                 if (response.isSuccessful) {
                     val body = response.body ?: return@get

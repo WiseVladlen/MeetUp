@@ -54,7 +54,7 @@
                 android:src="@drawable/ic_baseline_add" />
 
             <ImageButton
-                android:id="@+id/properties_button"
+                android:id="@+id/more_button"
                 android:layout_width="@dimen/image_button.width"
                 android:layout_height="@dimen/image_button.height"
                 android:background="@android:color/transparent"

@@ -15,7 +15,7 @@ import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.meet_up.MainApplication
 import com.example.meet_up.R
-import com.example.meet_up.databinding.FragmentAddEventBinding
+import com.example.meet_up.databinding.FragmentManageEventBinding
 import com.example.meet_up.presentation.event.ManageEventViewModel
 import com.example.meet_up.tools.hide
 import com.example.meet_up.tools.launchWhenCreated
@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.onEach
 import java.util.Calendar
 import javax.inject.Inject
 
-class CreateEventFragment : Fragment(R.layout.fragment_add_event) {
+class CreateEventFragment : Fragment(R.layout.fragment_manage_event) {
 
     @Inject
     lateinit var createEventViewModelFactory: CreateEventViewModel.CreateEventViewModelFactory
@@ -36,7 +36,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_add_event) {
 
     private val navController by lazy { requireActivity().findNavController(R.id.menu_container) }
 
-    private val binding by viewBinding<FragmentAddEventBinding>()
+    private val binding by viewBinding<FragmentManageEventBinding>()
 
     private val onStartDateSetListener = OnDateSetListener { _, year, month, dayOfMonth ->
         binding.startDateTimeCard.textViewDate.text = viewModel.updateStartDate(year, month, dayOfMonth)

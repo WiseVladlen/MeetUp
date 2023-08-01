@@ -16,20 +16,22 @@ import androidx.navigation.navGraphViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.meet_up.MainApplication
 import com.example.meet_up.R
-import com.example.meet_up.databinding.FragmentAddEventBinding
+import com.example.meet_up.databinding.FragmentManageEventBinding
 import com.example.meet_up.presentation.event.ManageEventViewModel
 import com.example.meet_up.tools.copyFrom
 import com.example.meet_up.tools.hide
+import com.example.meet_up.tools.isAllDay
 import com.example.meet_up.tools.launchWhenCreated
 import com.example.meet_up.tools.show
 import com.example.meet_up.tools.toFullFormat
 import com.example.meet_up.tools.toShortFormat
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onSubscription
+import java.time.Duration
 import java.util.Calendar
 import javax.inject.Inject
 
-class EditEventFragment : Fragment(R.layout.fragment_add_event) {
+class EditEventFragment : Fragment(R.layout.fragment_manage_event) {
 
     @Inject
     lateinit var editEventViewModelFactory: EditEventViewModel.EditEventViewModelFactory
@@ -39,7 +41,7 @@ class EditEventFragment : Fragment(R.layout.fragment_add_event) {
 
     private val navController by lazy { requireActivity().findNavController(R.id.menu_container) }
 
-    private val binding by viewBinding<FragmentAddEventBinding>()
+    private val binding by viewBinding<FragmentManageEventBinding>()
 
     private val args: EditEventFragmentArgs by navArgs()
 
@@ -84,11 +86,13 @@ class EditEventFragment : Fragment(R.layout.fragment_add_event) {
 
     private fun observeModel() {
         viewModel.eventFlow
-            .onSubscription { viewModel.requestEvent(args.eventId) }
+            .onSubscription { viewModel.requestEvent(eventId) }
             .onEach { event ->
                 binding.apply {
                     editTextTitle.setText(event.title)
+
                     manageEventViewModel.pushRoom(event.room)
+                    manageEventViewModel.pushParticipantList(event.users)
 
                     startDateTimeCard.apply {
                         textViewDate.text = event.startDate.toFullFormat()
@@ -98,6 +102,10 @@ class EditEventFragment : Fragment(R.layout.fragment_add_event) {
                     endDateTimeCard.apply {
                         textViewDate.text = event.endDate.toFullFormat()
                         textViewTime.text = event.endDate.toShortFormat()
+                    }
+
+                    if (Duration.ofMillis(event.endDate.time - event.startDate.time).isAllDay()) {
+                        allDayCard.modeSwitch.isChecked = true
                     }
 
                     viewModel.startDate.copyFrom(Calendar.Builder().setInstant(event.startDate).build())
@@ -120,6 +128,8 @@ class EditEventFragment : Fragment(R.layout.fragment_add_event) {
 
     private fun initializeViews() {
         with(binding) {
+            toolbar.setNavigationOnClickListener { navController.navigateUp() }
+
             allDayCard.apply {
                 root.setOnClickListener {
                     modeSwitch.isChecked = !modeSwitch.isChecked
@@ -212,6 +222,12 @@ class EditEventFragment : Fragment(R.layout.fragment_add_event) {
                 setOnClickListener {
                     navController.navigate(EditEventFragmentDirections.actionEditEventFragmentToSelectRoomFragment())
                 }
+            }
+
+            buttonDelete.apply {
+                show()
+
+                setOnClickListener { viewModel.delete(eventId) }
             }
 
             textViewDone.setOnClickListener {

@@ -18,6 +18,8 @@
     <string name="bottom_navigation_menu.today">Today</string>
     <string name="bottom_navigation_menu.room_list">Rooms</string>
     <string name="bottom_navigation_menu.event_list">Events</string>
+    <!-- Calendar screen. Main menu. -->
+    <string name="main_menu.log_out">Log Out</string>
     <!-- Room screen. -->
     <string name="room.done">Done</string>
     <!-- Edit room screen. -->
@@ -33,10 +35,11 @@
     <string name="room_list.title">Room list</string>
     <string name="room_list.add">Add</string>
     <string name="room_list.no_results_message">No results</string>
-    <!-- Add event screen. -->
-    <string name="add_event.event_title_hint">Add title</string>
-    <string name="add_event.done">Done</string>
-    <string name="add_event.all_day">All-day</string>
+    <!-- Manage event screen. -->
+    <string name="manage_event.title_hint">Add title</string>
+    <string name="manage_event.done">Done</string>
+    <string name="manage_event.all_day">All-day</string>
+    <string name="manage_event.delete">Delete</string>
     <!-- Event card layout. -->
     <string name="event_card.title">%1$s • %2$s</string>
     <!-- Event details screen. -->

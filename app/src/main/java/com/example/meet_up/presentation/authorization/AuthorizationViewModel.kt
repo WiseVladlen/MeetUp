@@ -9,10 +9,12 @@ import com.example.meet_up.domain.usecases.Authorization
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Provider
 
 class AuthorizationViewModel(
-    private val authorization: Authorization
+    private val authorization: Authorization,
 ) : ViewModel() {
+
     private val _authorizationProcessLiveData = MutableLiveData<Boolean>()
     val authorizationProcessLiveData: LiveData<Boolean>
         get() = _authorizationProcessLiveData
@@ -25,12 +27,10 @@ class AuthorizationViewModel(
     }
 
     class AuthorizationViewModelFactory @Inject constructor(
-        private val authorization: Authorization
+        private val authorization: Provider<Authorization>,
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AuthorizationViewModel(
-                authorization
-            ) as T
+            return AuthorizationViewModel(authorization.get()) as T
         }
     }
 }

@@ -4,13 +4,15 @@ import com.example.meet_up.R
 import com.example.meet_up.databinding.EventCardLayoutBinding
 import com.example.meet_up.tools.toFullFormat
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import java.text.DateFormat
 
 fun dateAdapterDelegate() = adapterDelegateViewBinding<EventListItem.DateItem, EventListItem, EventCardLayoutBinding>(
     { layoutInflater, parent -> EventCardLayoutBinding.inflate(layoutInflater, parent, false) }
 ) {
     bind {
-        binding.root.text = item.date.toFullFormat()
+        binding.root.apply {
+            text = item.date.toFullFormat()
+            setBackgroundColor(getColor(R.color.gainsboro))
+        }
     }
 }
 

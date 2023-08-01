@@ -20,7 +20,10 @@ class ManageEventViewModel : ViewModel() {
         get() = _room
 
     fun pushRoom(roomModel: RoomModel) {
-        _room = roomModel
+        viewModelScope.launch {
+            _room = roomModel
+            _roomFlow.emit(roomModel)
+        }
     }
 
     private val _temporaryParticipantList = mutableListOf<UserModel>()
