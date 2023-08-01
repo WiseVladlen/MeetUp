@@ -12,6 +12,7 @@ import javax.inject.Inject
 class RoomRepositoryImpl @Inject constructor(
     private val dataBase: DataBase
 ): RoomRepository {
+
     override suspend fun createRoom(roomModel: RoomModel) {
         dataBase.roomDao.createRoom(roomModel.toRoom())
     }

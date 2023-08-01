@@ -27,7 +27,7 @@ data class Event(
     @ColumnInfo(name = ROOM_ID_COLUMN_NAME)
     val roomId: Int,
     @ColumnInfo(name = ORGANIZER_COLUMN_NAME)
-    val organizer: String
+    val organizer: String,
 ) {
     companion object {
         const val TABLE_NAME = "event"

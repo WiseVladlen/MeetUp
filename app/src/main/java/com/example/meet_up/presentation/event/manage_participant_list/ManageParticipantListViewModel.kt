@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.domain.models.UserModel
-import com.example.meet_up.domain.usecases.LoadFilteredUserListInteractor
+import com.example.meet_up.domain.interactors.LoadFilteredUserListInteractor
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

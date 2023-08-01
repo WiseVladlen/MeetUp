@@ -7,10 +7,10 @@ import com.example.meet_up.data.local.UserStorage
 import com.example.meet_up.domain.models.EventModel
 import com.example.meet_up.domain.models.RoomModel
 import com.example.meet_up.domain.models.UserModel
-import com.example.meet_up.domain.usecases.DeleteEventInteractor
-import com.example.meet_up.domain.usecases.LoadEventInteractor
-import com.example.meet_up.domain.usecases.UpdateEventInteractor
-import com.example.meet_up.domain.usecases.ValidateEventInteractor
+import com.example.meet_up.domain.interactors.DeleteEventInteractor
+import com.example.meet_up.domain.interactors.LoadEventInteractor
+import com.example.meet_up.domain.interactors.UpdateEventInteractor
+import com.example.meet_up.domain.interactors.ValidateEventInteractor
 import com.example.meet_up.tools.MIN_EVENT_DURATION
 import com.example.meet_up.tools.getEndOfDayCalendar
 import com.example.meet_up.tools.getStartOfDayCalendar

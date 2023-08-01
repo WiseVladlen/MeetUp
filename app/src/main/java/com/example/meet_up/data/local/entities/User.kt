@@ -10,7 +10,7 @@ data class User(
     @ColumnInfo(name = LOGIN_COLUMN_NAME)
     val login: String,
     @ColumnInfo(name = PASSWORD_COLUMN_NAME)
-    val password: String
+    val password: String,
 ) {
     companion object {
         const val TABLE_NAME = "user"

@@ -1,6 +1,6 @@
 package com.example.meet_up.data.mappers
 
-import com.example.meet_up.data.local.entities.queryModels.EventWithRoomAndUsers
+import com.example.meet_up.data.local.entities.query_models.EventWithRoomAndUsers
 import com.example.meet_up.domain.models.EventModel
 
 fun EventWithRoomAndUsers.toEventModel(): EventModel {

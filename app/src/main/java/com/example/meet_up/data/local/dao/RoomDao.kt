@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RoomDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createRoom(room: Room): Long
 

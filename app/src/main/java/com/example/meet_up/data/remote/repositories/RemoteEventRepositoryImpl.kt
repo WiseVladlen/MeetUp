@@ -102,9 +102,7 @@ class RemoteEventRepositoryImpl @Inject constructor(
 
     companion object {
         private const val YANDEX_CALENDAR_SERVER_URI = "https://caldav.yandex.ru/calendars"
-
         private const val YANDEX_CALENDAR_ID = "events-24483602"
-
         private const val CALENDAR_FILE_EXTENSION = ".ics"
     }
 }

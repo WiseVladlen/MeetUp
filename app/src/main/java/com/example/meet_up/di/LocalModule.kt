@@ -9,6 +9,7 @@ import javax.inject.Singleton
 
 @Module
 class LocalModule {
+
     @Singleton
     @Provides
     fun provideDataBase(context: Context): DataBase {

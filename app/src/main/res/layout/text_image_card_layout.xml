@@ -2,6 +2,6 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/card.normal_height"
-    android:drawablePadding="16dp"
+    android:drawablePadding="@dimen/text_card.drawable_padding"
     android:gravity="center_vertical"
-    android:paddingHorizontal="20dp" />
+    android:paddingHorizontal="@dimen/text_card.horizontal_padding" />

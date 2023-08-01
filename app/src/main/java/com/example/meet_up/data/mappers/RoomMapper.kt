@@ -6,6 +6,6 @@ import com.example.meet_up.domain.models.RoomModel
 fun Room.toRoomModel(): RoomModel {
     return RoomModel(
         id = id,
-        title = title
+        title = title,
     )
 }

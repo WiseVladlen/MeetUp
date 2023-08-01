@@ -5,6 +5,6 @@ import com.example.meet_up.domain.models.UserModel
 
 fun User.toUserModel(): UserModel {
     return UserModel(
-        login, password
+        login, password,
     )
 }

@@ -11,12 +11,13 @@ data class Room(
     @ColumnInfo(name = ID_COLUMN_NAME)
     val id: Int = DEFAULT_ID,
     @ColumnInfo(name = TITLE_COLUMN_NAME)
-    val title: String
+    val title: String,
 ) {
     companion object {
         const val TABLE_NAME = "room"
         const val ID_COLUMN_NAME = "id"
         const val TITLE_COLUMN_NAME = "title"
+
         private const val DEFAULT_ID = 0
     }
 }

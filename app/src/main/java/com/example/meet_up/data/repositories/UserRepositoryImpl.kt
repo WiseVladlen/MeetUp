@@ -7,7 +7,7 @@ import com.example.meet_up.domain.repositories.UserRepository
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val dataBase: DataBase
+    private val dataBase: DataBase,
 ): UserRepository {
     override suspend fun getUserByLogin(login: String): Result<UserModel> {
         return dataBase.userDao.getByLogin(login)?.let { user ->
@@ -34,6 +34,6 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     companion object {
-        const val NOT_USER_MESSAGE = "not user with such login"
+        const val NOT_USER_MESSAGE = "Not user with such login"
     }
 }

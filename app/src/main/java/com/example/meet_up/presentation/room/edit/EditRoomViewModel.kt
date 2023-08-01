@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.domain.models.RoomModel
-import com.example.meet_up.domain.usecases.DeleteRoomInteractor
-import com.example.meet_up.domain.usecases.UpdateRoomInteractor
+import com.example.meet_up.domain.interactors.DeleteRoomInteractor
+import com.example.meet_up.domain.interactors.UpdateRoomInteractor
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

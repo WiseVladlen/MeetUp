@@ -6,8 +6,7 @@
     <string name="login.action_log_in">Log In</string>
     <string name="authorization_error_message">Authorization error</string>
     <!-- Calendar screen -->
-    <string name="calendar.title_day">%1$s</string>
-    <string name="calendar.title_month">%1$s</string>
+    <string name="calendar.title">%1$s %2$d</string>
     <!-- Calendar screen. Action. -->
     <string name="calendar.more_info_description">More info button</string>
     <string name="calendar.add_event_description">Add event button</string>
@@ -20,6 +19,9 @@
     <string name="bottom_navigation_menu.event_list">Events</string>
     <!-- Calendar screen. Main menu. -->
     <string name="main_menu.log_out">Log Out</string>
+    <!-- Calendar screen. Day cell. -->
+    <string name="day_cell.indicator">Selected day cell indicator</string>
+    <string name="day_cell.event_indicator">Event indicator</string>
     <!-- Room screen. -->
     <string name="room.done">Done</string>
     <!-- Edit room screen. -->

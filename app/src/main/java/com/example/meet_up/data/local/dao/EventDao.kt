@@ -1,15 +1,14 @@
 package com.example.meet_up.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.meet_up.data.local.entities.*
-import com.example.meet_up.data.local.entities.queryModels.EventWithRoomAndUsers
-import com.example.meet_up.data.local.entities.queryModels.UserEventsWithRoom
+import com.example.meet_up.data.local.entities.query_models.EventWithRoomAndUsers
+import com.example.meet_up.data.local.entities.query_models.UserEventsWithRoom
 import kotlinx.coroutines.flow.Flow
 
 @Dao

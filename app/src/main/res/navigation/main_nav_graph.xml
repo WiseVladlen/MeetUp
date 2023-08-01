@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/bottomNavigationFragment"
-        android:name="com.example.meet_up.presentation.bottomNavigation.BottomNavigationFragment"
+        android:name="com.example.meet_up.presentation.bottom_navigation.BottomNavigationFragment"
         android:label="BottomNavigationFragment">
         <action
             android:id="@+id/action_bottomNavigationFragment_to_authorizationFragment"

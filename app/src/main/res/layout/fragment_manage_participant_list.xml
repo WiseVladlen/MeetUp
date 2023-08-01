@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_marginBottom="@dimen/toolbar.bottom_margin"
-        app:navigationIcon="@drawable/ic_baseline_arrow_back"
-        app:title="@string/select_room.title"
-        app:titleCentered="true">
+        app:navigationIcon="@drawable/ic_baseline_arrow_back">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,23 +39,9 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <ViewSwitcher
-        android:id="@+id/viewSwitcher"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/participant_list_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/participant_list_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/textView_empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/manage_participant_list.no_results_message" />
-
-    </ViewSwitcher>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

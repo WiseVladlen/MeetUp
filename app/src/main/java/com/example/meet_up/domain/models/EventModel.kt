@@ -10,5 +10,5 @@ data class EventModel(
     val endDate: Date,
     val users: List<UserModel>,
     val room: RoomModel,
-    val organizer: String
+    val organizer: String,
 )

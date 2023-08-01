@@ -2,7 +2,7 @@ package com.example.meet_up.di
 
 import android.content.Context
 import com.example.meet_up.presentation.authorization.AuthorizationFragment
-import com.example.meet_up.presentation.bottomNavigation.BottomNavigationFragment
+import com.example.meet_up.presentation.bottom_navigation.BottomNavigationFragment
 import com.example.meet_up.presentation.calendar.CalendarFragment
 import com.example.meet_up.presentation.event.EventListFragment
 import com.example.meet_up.presentation.event.create.CreateEventFragment

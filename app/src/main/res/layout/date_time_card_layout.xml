@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:paddingHorizontal="44dp" />
+        android:paddingHorizontal="@dimen/date_time_card.date_horizontal_padding" />
 
     <TextView
         android:id="@+id/textView_time"

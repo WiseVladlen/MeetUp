@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.meet_up.MainApplication
 import com.example.meet_up.R
 import com.example.meet_up.databinding.FragmentLoginBinding
@@ -21,12 +23,9 @@ class AuthorizationFragment : Fragment(R.layout.fragment_login) {
 
     @Inject
     lateinit var viewModelFactory: AuthorizationViewModel.AuthorizationViewModelFactory
-
-    private var _binding: FragmentLoginBinding? = null
     private val viewModel: AuthorizationViewModel by viewModels { viewModelFactory }
 
-    private val binding
-        get() = _binding!!
+    private val binding by viewBinding<FragmentLoginBinding>()
 
     private val authorizationErrorMessage by lazy { requireContext().getString(R.string.authorization_error_message) }
 
@@ -36,33 +35,20 @@ class AuthorizationFragment : Fragment(R.layout.fragment_login) {
         super.onAttach(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
+        initializeViews()
         observeModel()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        _binding = null
-    }
-
-    private fun initViews() {
-        binding.apply {
-            authorizationButton.setOnClickListener {
-                viewModel.authorizationProcess(loginText.text.toString(), passwordText.text.toString())
+    private fun initializeViews() {
+        with(binding) {
+            buttonLogIn.setOnClickListener {
+                viewModel.authorizationProcess(
+                    loginText.text.toString(),
+                    passwordText.text.toString(),
+                )
             }
         }
     }
@@ -78,7 +64,8 @@ class AuthorizationFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun navigateToMainScreen() {
-        binding.root.findNavController()
-            .navigate(AuthorizationFragmentDirections.actionAuthorizationFragmentToBottomNavigationFragment())
+        binding.root.findNavController().navigate(
+            AuthorizationFragmentDirections.actionAuthorizationFragmentToBottomNavigationFragment()
+        )
     }
 }

@@ -38,7 +38,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/authorization_button"
+        android:id="@+id/button_logIn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button.height"
         android:layout_marginHorizontal="@dimen/button.horizontal_margin"

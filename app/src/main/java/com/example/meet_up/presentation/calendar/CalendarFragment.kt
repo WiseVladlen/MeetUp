@@ -8,14 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.meet_up.MainApplication
 import com.example.meet_up.R
 import com.example.meet_up.databinding.FragmentCalendarBinding
-import com.example.meet_up.presentation.bottomNavigation.BottomNavigationFragmentDirections
-import com.example.meet_up.presentation.calendar.calendarEvents.DayBinder
-import com.example.meet_up.presentation.calendar.calendarEvents.MonthsHeaderBinder
-import com.example.meet_up.presentation.calendar.dayEventsAdapter.EventAdapter
+import com.example.meet_up.presentation.bottom_navigation.BottomNavigationFragmentDirections
+import com.example.meet_up.presentation.calendar.calendar_events.DayBinder
+import com.example.meet_up.presentation.calendar.calendar_events.MonthsHeaderBinder
+import com.example.meet_up.presentation.calendar.adapter.EventAdapter
 import com.example.meet_up.tools.hide
 import com.example.meet_up.tools.launchWhenStarted
 import com.example.meet_up.tools.show
@@ -50,6 +52,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
                         }
                         true
                     }
+
                     else -> false
                 }
             }
@@ -70,9 +73,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun initializeViews() {
-        binding.apply {
-            eventsRecycler.adapter = eventAdapter
+        setupRecyclerView()
 
+        with(binding) {
             setupCalendar()
 
             addButton.setOnClickListener {
@@ -92,6 +95,21 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
                 eventsRecycler.hide()
                 calendarView.show()
             }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        val linearLayoutManager = LinearLayoutManager(context)
+        val dividerItemDecoration = DividerItemDecoration(
+            context,
+            linearLayoutManager.orientation,
+        )
+
+        binding.eventsRecycler.apply {
+            layoutManager = linearLayoutManager
+            adapter = eventAdapter
+
+            addItemDecoration(dividerItemDecoration)
         }
     }
 
@@ -120,7 +138,11 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun onEventClick(eventId: String) {
-        navController.navigate(CalendarFragmentDirections.actionCalendarFragmentToEditEventFragment(eventId))
+        navController.navigate(
+            CalendarFragmentDirections.actionCalendarFragmentToEditEventFragment(
+                eventId
+            )
+        )
     }
 
     private fun onDayClick(date: LocalDate) {

@@ -28,13 +28,14 @@ data class EventUser(
     @ColumnInfo(name = EVENT_ID_COLUMN_NAME)
     val eventId: String,
     @ColumnInfo(name = USER_LOGIN_COLUMN_NAME)
-    val userLogin: String
+    val userLogin: String,
 ) {
     companion object {
         const val TABLE_NAME = "event_user"
         const val ID_COLUMN_NAME = "id"
         const val EVENT_ID_COLUMN_NAME = "event_id"
         const val USER_LOGIN_COLUMN_NAME = "user_login"
+
         private const val DEFAULT_ID = 0
     }
 }

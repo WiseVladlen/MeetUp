@@ -37,4 +37,17 @@
     <dimen name="card_icon.padding">12dp</dimen>
     <!-- Switch. -->
     <dimen name="switch.horizontal_padding">16dp</dimen>
+    <!-- Day cell. Selected day indicator. -->
+    <dimen name="day_cell.indicator_width">4dp</dimen>
+    <dimen name="day_cell.indicator_height">4dp</dimen>
+    <dimen name="day_cell.indicator_padding">4dp</dimen>
+    <!-- Day cell. Event indicator. -->
+    <dimen name="day_cell.event_indicator_width">4dp</dimen>
+    <dimen name="day_cell.event_indicator_height">4dp</dimen>
+    <dimen name="day_cell.event_indicator_bottom_margin">12dp</dimen>
+    <!-- Date & Time card layout. -->
+    <dimen name="date_time_card.date_horizontal_padding">44dp</dimen>
+    <!-- Text card layout. -->
+    <dimen name="text_card.horizontal_padding">20dp</dimen>
+    <dimen name="text_card.drawable_padding">16dp</dimen>
 </resources>

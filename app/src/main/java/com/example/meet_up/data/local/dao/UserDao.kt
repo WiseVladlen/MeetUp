@@ -7,6 +7,7 @@ import com.example.meet_up.data.local.entities.User
 
 @Dao
 interface UserDao {
+
     @Query("SELECT * FROM user WHERE user_login = :queryLogin")
     suspend fun getByLogin(queryLogin: String): User?
 
