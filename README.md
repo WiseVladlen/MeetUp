@@ -12,3 +12,8 @@
 - Клонировать проект и запустить с помощью IDE (Android Studio)
 - Настроить версию Gradle (по необходимости)
 - Запуститить на устройстве, учитывая минимально допустимую версию Android API
+
+## Прочее
+
+Для осуществления синхронизации необходимо стабильное подключение к сети Интернет.
+Авторизационные данные можно найти [здесь](https://github.com/WiseVladlen/MeetUp/blob/master/app/src/main/java/com/example/meet_up/data/local/PreliminaryData.kt)
