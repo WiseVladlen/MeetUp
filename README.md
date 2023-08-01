@@ -16,4 +16,4 @@
 ## Прочее
 
 Для осуществления синхронизации необходимо стабильное подключение к сети Интернет.
-Авторизационные данные можно найти [здесь]([https://www.google.com](https://github.com/WiseVladlen/MeetUp/blob/master/app/src/main/java/com/example/meet_up/data/local/PreliminaryData.kt)https://github.com/WiseVladlen/MeetUp/blob/master/app/src/main/java/com/example/meet_up/data/local/PreliminaryData.kt)
+Авторизационные данные можно найти [здесь](https://github.com/WiseVladlen/MeetUp/blob/master/app/src/main/java/com/example/meet_up/data/local/PreliminaryData.kt)
