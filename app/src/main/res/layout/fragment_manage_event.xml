@@ -23,7 +23,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="@string/manage_event.title_hint" />
+                android:hint="@string/manage_event.title_hint"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp" />
 
             <TextView
                 android:id="@+id/textView_done"

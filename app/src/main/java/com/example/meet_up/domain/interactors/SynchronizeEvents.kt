@@ -6,7 +6,7 @@ import com.example.meet_up.domain.repositories.RemoteEventRepository
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class SynchronizeEventsInteractor @Inject constructor(
+class SynchronizeEvents @Inject constructor(
     private val eventRepository: EventRepository,
     private val remoteEventRepository: RemoteEventRepository,
 ) {
@@ -14,7 +14,7 @@ class SynchronizeEventsInteractor @Inject constructor(
     /**
      * PS : Yandex automatically changes the transmitted UUID, so the whole list is constantly updated.
      */
-    suspend fun invoke() {
+    suspend operator fun invoke() {
         eventRepository.getUserEvents(UserStorage.user.login).first().let { localEvents ->
             remoteEventRepository.getEventIdList { remoteEventIds ->
                 val localEventIds = localEvents.map { it.id }

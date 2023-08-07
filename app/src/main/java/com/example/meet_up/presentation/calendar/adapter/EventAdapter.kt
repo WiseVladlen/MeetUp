@@ -1,21 +1,17 @@
 package com.example.meet_up.presentation.calendar.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.meet_up.R
 
 class EventAdapter(
-    private val onEventClickListener: EventViewHolder.OnEventClickListener,
-) : ListAdapter<EventDisplay, EventViewHolder>(EventDiffUtil) {
+    private val listener: EventViewHolder.OnEventClickListener,
+) : ListAdapter<EventDisplay, EventViewHolder>(EventDiffCallback) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        return EventViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.event_card_layout, parent, false)
-        )
+        return EventViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.bind(getItem(position), onEventClickListener)
+        holder.bind(getItem(position), listener)
     }
 }

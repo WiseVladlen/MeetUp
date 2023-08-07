@@ -24,25 +24,20 @@ class MonthsViewContainer(view: View) : ViewContainer(view) {
 
     fun bind(date: CalendarMonth) {
         binding.apply {
-            if (root.tag == null) {
-                root.tag = date.yearMonth
+            monthTitle.text = view.resources.getString(
+                R.string.calendar_title,
+                date.yearMonth.month.getDisplayName(
+                    TextStyle.FULL,
+                    Locale.getDefault()
+                ),
+                date.yearMonth.year
+            )
 
-                monthTitle.text = view.resources.getString(
-                    R.string.calendar_title,
-                    date.yearMonth.month.getDisplayName(
-                        TextStyle.FULL,
-                        Locale.getDefault()
-                    ),
-                    date.yearMonth.year
-                )
-
-                weekDays.children.map {
-                    it as TextView
-                }.forEachIndexed { index, textView ->
-                    val dayOfWeek = daysOfWeek()[index]
-                    val title = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-                    textView.text = title
-                }
+            weekDays.children.map {
+                it as TextView
+            }.forEachIndexed { index, textView ->
+                val dayOfWeek = daysOfWeek()[index]
+                textView.text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
             }
         }
     }

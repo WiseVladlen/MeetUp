@@ -13,16 +13,35 @@ class RoomRepositoryImpl @Inject constructor(
     private val dataBase: DataBase
 ): RoomRepository {
 
-    override suspend fun createRoom(roomModel: RoomModel) {
-        dataBase.roomDao.createRoom(roomModel.toRoom())
+    override suspend fun createRoom(roomModel: RoomModel): Result<Unit> {
+        return try {
+            dataBase.roomDao.createRoom(roomModel.toRoom())
+            Result.success(Unit)
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
     }
 
-    override suspend fun updateRoom(roomModel: RoomModel) {
-        dataBase.roomDao.updateRoom(roomModel.toRoom())
+    override suspend fun updateRoom(roomModel: RoomModel): Result<Unit> {
+        return try {
+            dataBase.roomDao.updateRoom(roomModel.toRoom())
+            Result.success(Unit)
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
     }
 
-    override suspend fun deleteRoom(roomId: Int) {
-        dataBase.roomDao.deleteRoomById(roomId)
+    override suspend fun deleteRoom(roomId: Int): Result<Unit> {
+        return try {
+            dataBase.roomDao.deleteRoomById(roomId)
+            Result.success(Unit)
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
+    }
+
+    override suspend fun getRoom(roomId: Int): RoomModel {
+        return dataBase.roomDao.getRoom(roomId).toRoomModel()
     }
 
     override fun getAllRooms(): Flow<List<RoomModel>> {

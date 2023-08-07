@@ -32,9 +32,7 @@ class DayViewContainer(view: View) : ViewContainer(view) {
                 eventsIndicator.isVisible = dayContainerProps.daysWithEvents.contains(date.date)
                 calendarDayText.text = date.date.dayOfMonth.toString()
 
-                root.setOnClickListener {
-                    onDayClickListener(date.date)
-                }
+                root.setOnClickListener { onDayClickListener(date.date) }
             } else {
                 selectedIndicator.hide()
                 eventsIndicator.hide()

@@ -1,29 +1,30 @@
 package com.example.meet_up.presentation.event
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.meet_up.domain.models.RoomModel
 import com.example.meet_up.domain.models.UserModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class EventConfigViewModel : ViewModel() {
 
-    private var _room: RoomModel? = null
+    private val _roomFlow = MutableStateFlow<RoomModel?>(null)
+    private val _participantListFlow = MutableStateFlow<List<UserModel>>(listOf())
 
-    val room: RoomModel?
-        get() = _room
+    val roomFlow = _roomFlow.asStateFlow()
+    val participantListFlow = _participantListFlow.asStateFlow()
 
     fun pushRoom(roomModel: RoomModel) {
-        _room = roomModel
+        viewModelScope.launch {
+            _roomFlow.emit(roomModel)
+        }
     }
 
-    private val _temporaryParticipantList = mutableListOf<UserModel>()
-
-    val temporaryParticipantList: List<UserModel>
-        get() = _temporaryParticipantList
-
     fun pushParticipantList(list: List<UserModel>) {
-        _temporaryParticipantList.apply {
-            clear()
-            addAll(list)
+        viewModelScope.launch {
+            _participantListFlow.emit(list.toList())
         }
     }
 }

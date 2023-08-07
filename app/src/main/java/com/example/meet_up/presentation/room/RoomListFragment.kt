@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -25,8 +24,6 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list) {
     @Inject
     lateinit var roomListViewModelFactory: RoomListViewModel.RoomListViewModelFactory
     private val viewModel by viewModels<RoomListViewModel> { roomListViewModelFactory }
-
-    private val currentRoomViewModel by navGraphViewModels<CurrentRoomViewModel>(R.id.menu_nav_graph)
 
     private val binding by viewBinding<FragmentRoomListBinding>()
 
@@ -52,7 +49,7 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list) {
             setupRecyclerView()
 
             addRoomButton.setOnClickListener {
-                navController.navigate(RoomListFragmentDirections.actionNavigationRoomListFragmentToAddRoomFragment())
+                navController.navigate(RoomListFragmentDirections.actionNavigationRoomListFragmentToManageRoomFragment())
             }
         }
     }
@@ -76,21 +73,23 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list) {
         viewModel.roomListFlow.onEach { list ->
             with(binding) {
                 if (list.isEmpty()) {
-                    if (viewSwitcher.currentView.id == roomListRecyclerView.id) {
-                        viewSwitcher.showNext()
+                    if (roomListViewSwitcher.currentView.id == roomListRecyclerView.id) {
+                        roomListViewSwitcher.showNext()
                     }
-                } else if (viewSwitcher.currentView.id == textViewEmpty.id) {
+                } else if (roomListViewSwitcher.currentView.id == textViewEmpty.id) {
                     roomListAdapter.submitList(list)
 
-                    viewSwitcher.showNext()
+                    roomListViewSwitcher.showNext()
                 }
             }
         }.launchWhenStarted(lifecycleScope)
     }
 
     private fun onRoomItemClick(roomModel: RoomModel) {
-        currentRoomViewModel.setRoom(roomModel)
-
-        navController.navigate(RoomListFragmentDirections.actionNavigationRoomListFragmentToEditRoomFragment())
+        navController.navigate(
+            RoomListFragmentDirections.actionNavigationRoomListFragmentToManageRoomFragment().apply {
+                roomId = roomModel.id
+            }
+        )
     }
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.domain.models.UserModel
-import com.example.meet_up.domain.interactors.LoadFilteredUserListInteractor
+import com.example.meet_up.domain.interactors.LoadFilteredUsers
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -18,7 +18,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class ManageParticipantListViewModel(
-    private val loadFilteredUserListInteractor: LoadFilteredUserListInteractor,
+    private val loadFilteredUsers: LoadFilteredUsers,
 ) : ViewModel() {
 
     private val loadJob: CompletableJob = SupervisorJob()
@@ -71,8 +71,8 @@ class ManageParticipantListViewModel(
 
     private suspend fun collectUsersByQuery() {
         searchQuery.collectLatest { query ->
-            loadFilteredUserListInteractor.invoke(query, temporaryParticipantList)
-                .onFailure {  }
+            loadFilteredUsers(query, temporaryParticipantList)
+                .onFailure { _participantListFlow.emit(temporaryParticipantList) }
                 .onSuccess { _userListFlow.emit(it) }
         }
     }
@@ -83,12 +83,12 @@ class ManageParticipantListViewModel(
     }
 
     class ManageParticipantListViewModelFactory @Inject constructor(
-        private val loadFilteredUserListInteractor: Provider<LoadFilteredUserListInteractor>,
+        private val loadFilteredUsers: Provider<LoadFilteredUsers>,
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ManageParticipantListViewModel(
-                loadFilteredUserListInteractor.get(),
+                loadFilteredUsers.get(),
             ) as T
         }
     }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import javax.inject.Inject
 
-class LoadDayListWithEventList @Inject constructor(private val eventRepository: EventRepository) {
+class LoadDaysWithEvents @Inject constructor(private val eventRepository: EventRepository) {
 
     operator fun invoke(): Flow<Set<LocalDate>> {
         return eventRepository.getUserEvents(UserStorage.user.login)

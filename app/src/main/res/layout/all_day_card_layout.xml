@@ -9,9 +9,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:drawablePadding="16dp"
+        android:drawablePadding="@dimen/text_icon_card.drawable_padding"
         android:gravity="center_vertical"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="@dimen/text_icon_card.horizontal_padding"
         android:text="@string/manage_event.all_day"
         app:drawableStartCompat="@drawable/ic_baseline_access_time" />
 

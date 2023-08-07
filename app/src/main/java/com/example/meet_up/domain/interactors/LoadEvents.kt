@@ -4,7 +4,7 @@ import com.example.meet_up.data.local.UserStorage
 import com.example.meet_up.domain.repositories.EventRepository
 import javax.inject.Inject
 
-class LoadEventListInteractor @Inject constructor(private val eventRepository: EventRepository) {
+class LoadEvents @Inject constructor(private val eventRepository: EventRepository) {
 
-    fun invoke() = eventRepository.getUserEvents(UserStorage.user.login)
+    operator fun invoke() = eventRepository.getUserEvents(UserStorage.user.login)
 }

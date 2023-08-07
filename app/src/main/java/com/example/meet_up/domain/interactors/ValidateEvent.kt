@@ -8,9 +8,9 @@ import java.lang.Exception
 import java.time.Duration
 import javax.inject.Inject
 
-class ValidateEventInteractor @Inject constructor() {
+class ValidateEvent @Inject constructor() {
 
-    fun invoke(eventModel: EventModel): Result<Unit> {
+    operator fun invoke(eventModel: EventModel): Result<Unit> {
         val duration = Duration.ofMillis(eventModel.endDate.time - eventModel.startDate.time)
 
         return if (eventModel.title.isBlank()) {

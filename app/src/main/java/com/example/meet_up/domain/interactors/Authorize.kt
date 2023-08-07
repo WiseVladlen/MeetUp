@@ -5,7 +5,7 @@ import com.example.meet_up.data.remote.HttpClientFactory
 import com.example.meet_up.domain.repositories.UserRepository
 import javax.inject.Inject
 
-class AuthorizeInteractor @Inject constructor(
+class Authorize @Inject constructor(
     private val userRepository: UserRepository,
     private val httpClientFactory: HttpClientFactory,
 ) {

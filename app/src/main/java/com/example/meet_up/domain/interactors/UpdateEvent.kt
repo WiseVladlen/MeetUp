@@ -5,12 +5,12 @@ import com.example.meet_up.domain.repositories.EventRepository
 import com.example.meet_up.domain.repositories.RemoteEventRepository
 import javax.inject.Inject
 
-class UpdateEventInteractor @Inject constructor(
+class UpdateEvent @Inject constructor(
     private val eventRepository: EventRepository,
     private val remoteEventRepository: RemoteEventRepository,
 ) {
 
-    suspend fun invoke(event: EventModel): Result<Unit> {
+    suspend operator fun invoke(event: EventModel): Result<Unit> {
         val oldParticipantIds = eventRepository.getEvent(event.id).users.map { it.login }
         val newParticipantIds = event.users.map { it.login }
 

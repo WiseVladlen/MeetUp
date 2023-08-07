@@ -16,6 +16,7 @@
     <!-- Image button. -->
     <dimen name="image_button.width">56dp</dimen>
     <dimen name="image_button.height">56dp</dimen>
+    <dimen name="image_button.end_margin">12dp</dimen>
     <!-- Text. -->
     <dimen name="text.horizontal_padding">16dp</dimen>
     <!-- Toolbar. -->
@@ -27,14 +28,8 @@
     <dimen name="toolbar.action_button_horizontal_margin">12dp</dimen>
     <!-- Card. -->
     <dimen name="card.normal_height">56dp</dimen>
-    <dimen name="card.horizontal_padding">16dp</dimen>
-    <dimen name="card.vertical_padding">12dp</dimen>
-    <dimen name="card.horizontal_margin">16dp</dimen>
-    <dimen name="card.vertical_margin">12dp</dimen>
-    <dimen name="card.title_horizontal_margin">16dp</dimen>
-    <dimen name="card.subtitle_top_margin">8dp</dimen>
-    <!-- Card icon. -->
-    <dimen name="card_icon.padding">12dp</dimen>
+    <dimen name="card.title_vertical_padding">16dp</dimen>
+    <dimen name="card.title_horizontal_padding">14dp</dimen>
     <!-- Switch. -->
     <dimen name="switch.horizontal_padding">16dp</dimen>
     <!-- Day cell. Selected day indicator. -->
@@ -46,8 +41,10 @@
     <dimen name="day_cell.event_indicator_height">4dp</dimen>
     <dimen name="day_cell.event_indicator_bottom_margin">12dp</dimen>
     <!-- Date & Time card layout. -->
-    <dimen name="date_time_card.date_horizontal_padding">44dp</dimen>
+    <dimen name="date_time_card.date_horizontal_padding">52dp</dimen>
     <!-- Text card layout. -->
     <dimen name="text_card.horizontal_padding">20dp</dimen>
-    <dimen name="text_card.drawable_padding">16dp</dimen>
+    <!-- Text-icon card layout. -->
+    <dimen name="text_icon_card.horizontal_padding">20dp</dimen>
+    <dimen name="text_icon_card.drawable_padding">28dp</dimen>
 </resources>

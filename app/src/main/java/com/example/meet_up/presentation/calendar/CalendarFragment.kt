@@ -18,9 +18,12 @@ import com.example.meet_up.presentation.bottom_navigation.BottomNavigationFragme
 import com.example.meet_up.presentation.calendar.calendar_events.DayBinder
 import com.example.meet_up.presentation.calendar.calendar_events.MonthsHeaderBinder
 import com.example.meet_up.presentation.calendar.adapter.EventAdapter
+import com.example.meet_up.presentation.mappers.toEventDisplay
 import com.example.meet_up.tools.hide
+import com.example.meet_up.tools.launchWhenCreated
 import com.example.meet_up.tools.launchWhenStarted
 import com.example.meet_up.tools.show
+import com.example.meet_up.tools.toFullFormat
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
@@ -31,7 +34,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
     @Inject
     lateinit var calendarViewModelFactory: CalendarViewModel.Factory
-    private val calendarViewModel by viewModels<CalendarViewModel> { calendarViewModelFactory }
+    private val viewModel by viewModels<CalendarViewModel> { calendarViewModelFactory }
 
     private val navController by lazy { requireActivity().findNavController(R.id.menu_container) }
 
@@ -45,16 +48,14 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             inflate(R.menu.main_menu)
 
             setOnMenuItemClickListener {
-                return@setOnMenuItemClickListener when (it.itemId) {
+                when (it.itemId) {
                     R.id.menu_item_log_out -> {
                         requireActivity().findNavController(R.id.main_container).run {
                             navigate(BottomNavigationFragmentDirections.actionBottomNavigationFragmentToAuthorizationFragment())
                         }
-                        true
                     }
-
-                    else -> false
                 }
+                return@setOnMenuItemClickListener true
             }
         }
     }
@@ -79,21 +80,31 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             setupCalendar()
 
             addButton.setOnClickListener {
-                navController.navigate(CalendarFragmentDirections.actionCalendarFragmentToEditEventFragment())
+                navController.navigate(CalendarFragmentDirections.actionCalendarFragmentToManageEventGraph())
             }
 
             moreButton.setOnClickListener {
                 popUpMenu.show()
             }
 
-            dayButton.setOnClickListener {
-                eventsRecycler.show()
-                calendarView.hide()
-            }
+            periodButtonGroup.apply {
+                setOnCheckedChangeListener { _, id ->
+                    when (id) {
+                        dayButton.id -> {
+                            eventContainer.show()
+                            calendarView.hide()
 
-            monthButton.setOnClickListener {
-                eventsRecycler.hide()
-                calendarView.show()
+                            textViewTitle.text = viewModel.selectedDay.time.toFullFormat()
+                        }
+
+                        monthButton.id -> {
+                            eventContainer.hide()
+                            calendarView.show()
+                        }
+                    }
+                }
+
+                check(dayButton.id)
             }
         }
     }
@@ -105,7 +116,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             linearLayoutManager.orientation,
         )
 
-        binding.eventsRecycler.apply {
+        binding.eventListRecyclerView.apply {
             layoutManager = linearLayoutManager
             adapter = eventAdapter
 
@@ -127,18 +138,30 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun observeModel() {
-        calendarViewModel.loadEventsByDay().onEach { eventsList ->
-            eventAdapter.submitList(eventsList)
-        }.launchWhenStarted(lifecycleScope)
+        viewModel.eventsByDayFlow.onEach { list ->
+            with(binding) {
+                if (list.isEmpty()) {
+                    if (eventListViewSwitcher.currentView.id == eventListRecyclerView.id) {
+                        eventListViewSwitcher.showNext()
+                    }
+                } else if (eventListViewSwitcher.currentView.id == textViewEmpty.id) {
+                    eventAdapter.submitList(list.map { it.toEventDisplay() })
 
-        calendarViewModel.loadDaysWithEvents().onEach { days ->
+                    eventListViewSwitcher.showNext()
+                }
+
+                textViewTitle.text = viewModel.selectedDay.time.toFullFormat()
+            }
+        }.launchWhenCreated(viewLifecycleOwner)
+
+        viewModel.daysWithEventsFlow.onEach { days ->
             dayBinder.updateDaysWithEvents(days)
             binding.calendarView.notifyCalendarChanged()
         }.launchWhenStarted(lifecycleScope)
     }
 
     private fun onEventClick(eventId: String) {
-        CalendarFragmentDirections.actionCalendarFragmentToEditEventFragment().apply {
+        CalendarFragmentDirections.actionCalendarFragmentToManageEventGraph().apply {
             setEventId(eventId)
 
             navController.navigate(this)
@@ -146,7 +169,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun onDayClick(date: LocalDate) {
-        if (calendarViewModel.updateSelectedDay(date)) {
+        if (viewModel.updateSelectedDay(date)) {
             dayBinder.updateSelectedDay(date)
 
             binding.apply {

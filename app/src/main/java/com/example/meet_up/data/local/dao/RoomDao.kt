@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RoomDao {
 
+    @Query("SELECT * FROM room WHERE id = :id LIMIT 1")
+    suspend fun getRoom(id: Int): Room
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createRoom(room: Room): Long
 

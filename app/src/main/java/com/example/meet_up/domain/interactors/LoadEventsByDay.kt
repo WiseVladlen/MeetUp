@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
 
-class LoadEventListByDayInteractor @Inject constructor(
+class LoadEventsByDay @Inject constructor(
     private val eventRepository: EventRepository,
 ) {
 

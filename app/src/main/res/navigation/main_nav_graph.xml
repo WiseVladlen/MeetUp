@@ -11,7 +11,7 @@
         <action
             android:id="@+id/action_authorizationFragment_to_bottomNavigationFragment"
             app:destination="@id/bottomNavigationFragment"
-            app:popUpTo="@id/bottomNavigationFragment"
+            app:popUpTo="@id/authorizationFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -22,7 +22,7 @@
         <action
             android:id="@+id/action_bottomNavigationFragment_to_authorizationFragment"
             app:destination="@id/authorizationFragment"
-            app:popUpTo="@id/authorizationFragment"
+            app:popUpTo="@id/bottomNavigationFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

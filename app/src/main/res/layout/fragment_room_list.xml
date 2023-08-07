@@ -14,7 +14,7 @@
         app:titleCentered="true" />
 
     <ViewSwitcher
-        android:id="@+id/viewSwitcher"
+        android:id="@+id/room_list_viewSwitcher"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">

@@ -2,20 +2,20 @@ package com.example.meet_up.presentation.event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.meet_up.domain.interactors.LoadEventListInteractor
+import com.example.meet_up.domain.interactors.LoadEvents
 import javax.inject.Inject
 import javax.inject.Provider
 
-class EventListViewModel(loadEventListInteractor: LoadEventListInteractor) : ViewModel() {
+class EventListViewModel(loadEvents: LoadEvents) : ViewModel() {
 
-    val eventListFlow = loadEventListInteractor.invoke()
+    val eventListFlow = loadEvents()
 
     class EventListViewModelFactory @Inject constructor(
-        private val loadEventListInteractor: Provider<LoadEventListInteractor>,
+        private val loadEvents: Provider<LoadEvents>,
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return EventListViewModel(loadEventListInteractor.get()) as T
+            return EventListViewModel(loadEvents.get()) as T
         }
     }
 }

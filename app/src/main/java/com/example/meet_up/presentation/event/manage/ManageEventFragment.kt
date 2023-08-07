@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -23,10 +24,13 @@ import com.example.meet_up.tools.hide
 import com.example.meet_up.tools.isAllDay
 import com.example.meet_up.tools.launchWhenCreated
 import com.example.meet_up.tools.show
+import com.example.meet_up.tools.showKeyboard
 import com.example.meet_up.tools.toFullFormat
 import com.example.meet_up.tools.toShortFormat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.launch
 import java.time.Duration
 import java.util.Calendar
 import javax.inject.Inject
@@ -37,7 +41,7 @@ class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
     lateinit var manageEventViewModelFactory: ManageEventViewModel.ManageEventViewModelFactory
     private val viewModel by viewModels<ManageEventViewModel> { manageEventViewModelFactory }
 
-    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.menu_nav_graph)
+    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.manage_event_graph)
 
     private val navController by lazy { requireActivity().findNavController(R.id.menu_container) }
 
@@ -90,7 +94,10 @@ class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
             .onEach { result ->
                 result.onSuccess { event ->
                     binding.apply {
-                        editTextTitle.setText(event.title)
+                        editTextTitle.apply {
+                            setText(event.title)
+                            setSelection(event.title.length)
+                        }
 
                         eventConfigViewModel.pushRoom(event.room)
                         eventConfigViewModel.pushParticipantList(event.users)
@@ -111,11 +118,15 @@ class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
 
                         locationCard.root.text = event.room.title
 
-                        viewModel.startDate.copyFrom(Calendar.Builder().setInstant(event.startDate).build())
-                        viewModel.endDate.copyFrom(Calendar.Builder().setInstant(event.endDate).build())
+                        viewModel.startDate.copyFrom(
+                            Calendar.Builder().setInstant(event.startDate).build()
+                        )
+                        viewModel.endDate.copyFrom(
+                            Calendar.Builder().setInstant(event.endDate).build()
+                        )
                     }
                 }
-        }.launchWhenCreated(viewLifecycleOwner)
+            }.launchWhenCreated(viewLifecycleOwner)
 
         viewModel.onErrorFlow.onEach { message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
@@ -124,11 +135,17 @@ class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
         viewModel.onSuccessFlow.onEach {
             navController.navigateUp()
         }.launchWhenCreated(viewLifecycleOwner)
+
+        eventConfigViewModel.roomFlow.onEach { room ->
+            binding.locationCard.root.text = room?.title ?: getString(R.string.location_hint)
+        }.launchWhenCreated(viewLifecycleOwner)
     }
 
     private fun initializeViews() {
         with(binding) {
             toolbar.setNavigationOnClickListener { navController.navigateUp() }
+
+            editTextTitle.showKeyboard(requireActivity().window)
 
             allDayCard.apply {
                 root.setOnClickListener {
@@ -216,7 +233,6 @@ class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
             }
 
             locationCard.root.apply {
-                text = eventConfigViewModel.room?.title ?: getString(R.string.location_hint)
                 setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_location, 0, 0, 0)
 
                 setOnClickListener {
@@ -233,20 +249,16 @@ class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
             }
 
             textViewDone.setOnClickListener {
-                viewModel.put(
-                    eventId = eventId,
-                    title = editTextTitle.text.toString(),
-                    users = eventConfigViewModel.temporaryParticipantList,
-                    roomModel = eventConfigViewModel.room,
-                    isAllDay = allDayCard.modeSwitch.isChecked,
-                )
+                lifecycleScope.launch {
+                    viewModel.put(
+                        eventId = eventId,
+                        title = editTextTitle.text.toString(),
+                        users = eventConfigViewModel.participantListFlow.first(),
+                        roomModel = eventConfigViewModel.roomFlow.first(),
+                        isAllDay = allDayCard.modeSwitch.isChecked,
+                    )
+                }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        eventConfigViewModel.pushParticipantList(emptyList())
     }
 }

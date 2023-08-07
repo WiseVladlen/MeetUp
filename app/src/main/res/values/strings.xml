@@ -7,6 +7,7 @@
     <string name="authorization_error_message">Authorization error</string>
     <!-- Calendar screen -->
     <string name="calendar.title">%1$s %2$d</string>
+    <string name="calendar.event_list.no_results_message">No results</string>
     <!-- Calendar screen. Action. -->
     <string name="calendar.more_info_description">More info button</string>
     <string name="calendar.add_event_description">Add event button</string>
@@ -24,15 +25,12 @@
     <string name="day_cell.event_indicator">Event indicator</string>
     <!-- Room screen. -->
     <string name="room.done">Done</string>
-    <!-- Edit room screen. -->
-    <string name="edit_room.title">Edit room</string>
-    <string name="edit_room.name_hint">Room name</string>
-    <string name="edit_room.delete">Delete</string>
-    <string name="edit_room.done">Done</string>
-    <!-- Add room screen. -->
-    <string name="add_room.title">Add room</string>
-    <string name="add_room.name_hint">Room name</string>
-    <string name="add_room.done">Done</string>
+    <!-- Manage room screen. -->
+    <string name="manage_room.add_room_title">Add room</string>
+    <string name="manage_room.edit_room_title">Edit room</string>
+    <string name="manage_room.name_hint">Room name</string>
+    <string name="manage_room.delete">Delete</string>
+    <string name="manage_room.done">Done</string>
     <!-- Room list screen. -->
     <string name="room_list.title">Room list</string>
     <string name="room_list.add">Add</string>
@@ -53,10 +51,10 @@
     <string name="manage_participant_list.hint">Add people</string>
     <string name="manage_participant_list.no_results_message">No results</string>
     <!-- People card layout. -->
-    <string name="people_card.avatar_description">People avatar</string>
     <string name="people_card.delete_people_description">Delete people</string>
     <!-- Event list screen. -->
     <string name="event_list.title">Event list</string>
+    <string name="event_list.no_results_message">No results</string>
     <!-- Participant list layout. -->
     <string name="participant_list.title">Participants</string>
     <!-- Location layout. -->

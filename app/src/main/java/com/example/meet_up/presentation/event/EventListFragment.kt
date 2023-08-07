@@ -50,20 +50,30 @@ class EventListFragment: Fragment(R.layout.fragment_event_list) {
 
     private fun observeModel() {
         viewModel.eventListFlow.onEach { list ->
-            val eventsByDay = list.groupBy {
-                it.startDate.toInstant().atZone(ZoneId.systemDefault()).dayOfMonth
-            }
-
-            mutableListOf<EventListItem>().apply {
-                eventsByDay.forEach { (_, events) ->
-                    add(EventListItem.DateItem(events.first().startDate))
-
-                    events.forEach { event ->
-                        add(EventListItem.EventItem(event))
+            with(binding) {
+                if (list.isEmpty()) {
+                    if (eventListViewSwitcher.currentView.id == eventListRecyclerView.id) {
+                        eventListViewSwitcher.showNext()
                     }
-                }
+                } else if (eventListViewSwitcher.currentView.id == textViewEmpty.id) {
+                    val eventsByDay = list.groupBy {
+                        it.startDate.toInstant().atZone(ZoneId.systemDefault()).dayOfMonth
+                    }
 
-                eventListAdapter.items = this
+                    mutableListOf<EventListItem>().apply {
+                        eventsByDay.forEach { (_, events) ->
+                            add(EventListItem.DateItem(events.first().startDate))
+
+                            events.forEach { event ->
+                                add(EventListItem.EventItem(event))
+                            }
+                        }
+
+                        eventListAdapter.items = this
+                    }
+
+                    eventListViewSwitcher.showNext()
+                }
             }
         }.launchWhenCreated(viewLifecycleOwner)
     }

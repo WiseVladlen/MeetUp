@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.data.local.UserStorage
-import com.example.meet_up.domain.interactors.CreateEventInteractor
+import com.example.meet_up.domain.interactors.CreateEvent
 import com.example.meet_up.domain.models.EventModel
 import com.example.meet_up.domain.models.RoomModel
 import com.example.meet_up.domain.models.UserModel
-import com.example.meet_up.domain.interactors.DeleteEventInteractor
-import com.example.meet_up.domain.interactors.LoadEventInteractor
-import com.example.meet_up.domain.interactors.UpdateEventInteractor
-import com.example.meet_up.domain.interactors.ValidateEventInteractor
+import com.example.meet_up.domain.interactors.DeleteEvent
+import com.example.meet_up.domain.interactors.LoadEvent
+import com.example.meet_up.domain.interactors.UpdateEvent
+import com.example.meet_up.domain.interactors.ValidateEvent
 import com.example.meet_up.domain.models.EventModel.Companion.validate
 import com.example.meet_up.tools.MIN_EVENT_DURATION
 import com.example.meet_up.tools.getEndOfDayCalendar
@@ -33,11 +33,11 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class ManageEventViewModel(
-    private val loadEventInteractor: LoadEventInteractor,
-    private val updateEventInteractor: UpdateEventInteractor,
-    private val createEventInteractor: CreateEventInteractor,
-    private val deleteEventInteractor: DeleteEventInteractor,
-    private val validateEventInteractor: ValidateEventInteractor,
+    private val loadEvent: LoadEvent,
+    private val updateEvent: UpdateEvent,
+    private val createEvent: CreateEvent,
+    private val deleteEvent: DeleteEvent,
+    private val validateEvent: ValidateEvent,
 ) : ViewModel() {
 
     private val putJob: CompletableJob = SupervisorJob()
@@ -63,7 +63,7 @@ class ManageEventViewModel(
 
     fun requestEvent(eventId: String) {
         viewModelScope.launch {
-            _eventFlow.emit(loadEventInteractor.invoke(eventId))
+            _eventFlow.emit(loadEvent(eventId))
         }
     }
 
@@ -75,37 +75,37 @@ class ManageEventViewModel(
         isAllDay: Boolean,
     ) {
         viewModelScope.launch(Dispatchers.IO + putJob) {
-            roomModel?.let { room ->
-                val event = EventModel(
-                    id = eventId.validate(),
-                    title = title,
-                    startDate = (if (isAllDay) startDate.getStartOfDayCalendar() else startDate).time,
-                    endDate = (if (isAllDay) startDate.getEndOfDayCalendar() else endDate).time,
-                    users = users,
-                    room = room,
-                    organizer = UserStorage.user.login,
-                )
+            if (roomModel == null) return@launch _onErrorFlow.emit(NO_ROOM_SELECTED)
 
-                validateEventInteractor.invoke(event)
-                    .onFailure { _onErrorFlow.emit(it.message.toString()) }
-                    .onSuccess {
-                        if (event.id == eventId) {
-                            updateEventInteractor.invoke(event)
-                                .onFailure { _onErrorFlow.emit(it.message.toString()) }
-                                .onSuccess { _onSuccessFlow.emit(Unit) }
-                        } else {
-                            createEventInteractor.invoke(event)
-                                .onFailure { _onErrorFlow.emit(it.message.toString()) }
-                                .onSuccess { _onSuccessFlow.emit(Unit) }
-                        }
+            val event = EventModel(
+                id = eventId.validate(),
+                title = title,
+                startDate = (if (isAllDay) startDate.getStartOfDayCalendar() else startDate).time,
+                endDate = (if (isAllDay) startDate.getEndOfDayCalendar() else endDate).time,
+                users = users,
+                room = roomModel,
+                organizer = UserStorage.user.login,
+            )
+
+            validateEvent(event)
+                .onFailure { _onErrorFlow.emit(it.message.toString()) }
+                .onSuccess {
+                    if (event.id == eventId) {
+                        updateEvent(event)
+                            .onFailure { _onErrorFlow.emit(it.message.toString()) }
+                            .onSuccess { _onSuccessFlow.emit(it) }
+                    } else {
+                        createEvent(event)
+                            .onFailure { _onErrorFlow.emit(it.message.toString()) }
+                            .onSuccess { _onSuccessFlow.emit(it) }
                     }
-            } ?: _onErrorFlow.emit(NO_ROOM_SELECTED)
+                }
         }
     }
 
     fun delete(eventId: String) {
         viewModelScope.launch(Dispatchers.IO + deleteJob) {
-            deleteEventInteractor.invoke(eventId)
+            deleteEvent(eventId)
                 .onFailure { _onErrorFlow.emit(it.message.toString()) }
                 .onSuccess { _onSuccessFlow.emit(Unit) }
         }
@@ -148,20 +148,20 @@ class ManageEventViewModel(
     }
 
     class ManageEventViewModelFactory @Inject constructor(
-        private val loadEventInteractor: Provider<LoadEventInteractor>,
-        private val updateEventInteractor: Provider<UpdateEventInteractor>,
-        private val createEventInteractor: Provider<CreateEventInteractor>,
-        private val deleteEventInteractor: Provider<DeleteEventInteractor>,
-        private val validateEventInteractor: Provider<ValidateEventInteractor>,
+        private val loadEvent: Provider<LoadEvent>,
+        private val updateEvent: Provider<UpdateEvent>,
+        private val createEvent: Provider<CreateEvent>,
+        private val deleteEvent: Provider<DeleteEvent>,
+        private val validateEvent: Provider<ValidateEvent>,
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ManageEventViewModel(
-                loadEventInteractor.get(),
-                updateEventInteractor.get(),
-                createEventInteractor.get(),
-                deleteEventInteractor.get(),
-                validateEventInteractor.get(),
+                loadEvent.get(),
+                updateEvent.get(),
+                createEvent.get(),
+                deleteEvent.get(),
+                validateEvent.get(),
             ) as T
         }
     }

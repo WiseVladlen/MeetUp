@@ -1,36 +1,35 @@
 package com.example.meet_up.presentation.authorization
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.meet_up.domain.interactors.AuthorizeInteractor
+import com.example.meet_up.domain.interactors.Authorize
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
 class AuthorizationViewModel(
-    private val authorizeInteractor: AuthorizeInteractor,
+    private val authorize: Authorize,
 ) : ViewModel() {
 
-    private val _authorizationProcessLiveData = MutableLiveData<Boolean>()
-    val authorizationProcessLiveData: LiveData<Boolean>
-        get() = _authorizationProcessLiveData
+    private val _authorizationProcessFlow = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)
+    val authorizationProcessFlow = _authorizationProcessFlow.asSharedFlow()
 
     fun authorizationProcess(login: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val authorizationResult = authorizeInteractor(login, password)
-            _authorizationProcessLiveData.postValue(authorizationResult)
+            _authorizationProcessFlow.emit(authorize(login, password))
         }
     }
 
     class AuthorizationViewModelFactory @Inject constructor(
-        private val authorizeInteractor: Provider<AuthorizeInteractor>,
+        private val authorize: Provider<Authorize>,
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return AuthorizationViewModel(authorizeInteractor.get()) as T
+            return AuthorizationViewModel(authorize.get()) as T
         }
     }
 }

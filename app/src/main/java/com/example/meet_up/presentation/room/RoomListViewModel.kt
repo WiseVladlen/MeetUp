@@ -2,21 +2,21 @@ package com.example.meet_up.presentation.room
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.meet_up.domain.interactors.LoadRoomListInteractor
+import com.example.meet_up.domain.interactors.LoadRooms
 import javax.inject.Inject
 import javax.inject.Provider
 
-class RoomListViewModel(loadRoomListInteractor: LoadRoomListInteractor): ViewModel() {
+class RoomListViewModel(loadRooms: LoadRooms): ViewModel() {
 
-    val roomListFlow = loadRoomListInteractor.invoke()
+    val roomListFlow = loadRooms()
 
     class RoomListViewModelFactory @Inject constructor(
-        private val loadRoomListInteractor: Provider<LoadRoomListInteractor>,
+        private val loadRooms: Provider<LoadRooms>,
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return RoomListViewModel(
-                loadRoomListInteractor.get()
+                loadRooms.get()
             ) as T
         }
     }

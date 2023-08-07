@@ -9,8 +9,7 @@ import com.example.meet_up.presentation.event.manage.ManageEventFragment
 import com.example.meet_up.presentation.event.manage_participant_list.ManageParticipantListFragment
 import com.example.meet_up.presentation.event.select_room.SelectRoomFragment
 import com.example.meet_up.presentation.room.RoomListFragment
-import com.example.meet_up.presentation.room.create.AddRoomFragment
-import com.example.meet_up.presentation.room.edit.EditRoomFragment
+import com.example.meet_up.presentation.room.manage.ManageRoomFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -22,8 +21,7 @@ interface MainComponent {
     fun inflate(fragment: BottomNavigationFragment)
     fun inflate(fragment: CalendarFragment)
     fun inflate(fragment: RoomListFragment)
-    fun inflate(fragment: AddRoomFragment)
-    fun inflate(fragment: EditRoomFragment)
+    fun inflate(fragment: ManageRoomFragment)
     fun inflate(fragment: ManageParticipantListFragment)
     fun inflate(fragment: SelectRoomFragment)
     fun inflate(fragment: EventListFragment)

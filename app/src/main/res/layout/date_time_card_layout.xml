@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/card.normal_height"
     android:orientation="horizontal"
-    android:paddingHorizontal="@dimen/card.horizontal_padding">
+    android:paddingHorizontal="@dimen/text_card.horizontal_padding">
 
     <TextView
         android:id="@+id/textView_date"

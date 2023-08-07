@@ -22,7 +22,10 @@ import com.example.meet_up.presentation.event.manage_participant_list.adapter.Pe
 import com.example.meet_up.tools.hide
 import com.example.meet_up.tools.launchWhenStarted
 import com.example.meet_up.tools.show
+import com.example.meet_up.tools.showKeyboard
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_participant_list) {
@@ -31,7 +34,7 @@ class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_particip
     lateinit var manageParticipantListViewModelFactory: ManageParticipantListViewModel.ManageParticipantListViewModelFactory
     private val viewModel by viewModels<ManageParticipantListViewModel> { manageParticipantListViewModelFactory }
 
-    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.menu_nav_graph)
+    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.manage_event_graph)
 
     private val participantLayoutListener = ParticipantLayoutListener {
         viewModel.removeParticipant(it.userModel)
@@ -40,7 +43,7 @@ class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_particip
     private val nonParticipantLayoutListener = NonParticipantLayoutListener {
         viewModel.addParticipant(it.userModel)
 
-        binding.editTextLogin.setText(String())
+        binding.editTextLogin.editableText.clear()
     }
 
     private val peopleListAdapter = PeopleListDelegationAdapter(
@@ -69,17 +72,19 @@ class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_particip
         setupRecyclerView()
 
         with(binding) {
-            toolbar.setNavigationOnClickListener {
-                navController.navigateUp()
-            }
+            toolbar.setNavigationOnClickListener { navController.navigateUp() }
 
-            editTextLogin.doOnTextChanged { text, _, _, count ->
-                viewModel.searchQuery.value = text.toString()
+            editTextLogin.apply {
+                showKeyboard(requireActivity().window)
 
-                if (count > 0) {
-                    textViewDone.hide()
-                } else {
-                    textViewDone.show()
+                doOnTextChanged { text, _, _, count ->
+                    viewModel.searchQuery.value = text.toString()
+
+                    if (count > 0) {
+                        textViewDone.hide()
+                    } else {
+                        textViewDone.show()
+                    }
                 }
             }
 
@@ -106,8 +111,8 @@ class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_particip
             adapter = peopleListAdapter
         }
 
-        eventConfigViewModel.temporaryParticipantList.let { list ->
-            viewModel.initParticipants(list)
+        lifecycleScope.launch {
+            viewModel.initParticipants(eventConfigViewModel.participantListFlow.first())
         }
     }
 }

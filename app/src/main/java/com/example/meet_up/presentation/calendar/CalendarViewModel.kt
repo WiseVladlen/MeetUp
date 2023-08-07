@@ -3,33 +3,28 @@ package com.example.meet_up.presentation.calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.meet_up.domain.interactors.LoadDayListWithEventList
-import com.example.meet_up.domain.interactors.LoadEventListByDayInteractor
-import com.example.meet_up.presentation.calendar.adapter.EventDisplay
-import com.example.meet_up.presentation.mappers.toEventDisplay
+import com.example.meet_up.domain.interactors.LoadDaysWithEvents
+import com.example.meet_up.domain.interactors.LoadEventsByDay
+import com.example.meet_up.domain.models.EventModel
 import com.example.meet_up.tools.toCalendar
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import java.util.Calendar
 import javax.inject.Inject
 
 class CalendarViewModel(
-    private val loadEventListByDayInteractor: LoadEventListByDayInteractor,
-    private val loadDayListWithEventList: LoadDayListWithEventList,
+    private val loadEventsByDay: LoadEventsByDay,
+    loadDaysWithEvents: LoadDaysWithEvents,
 ) : ViewModel() {
 
-    private var selectedDay = Calendar.getInstance()
+    private var _selectedDay = Calendar.getInstance()
 
-    fun loadEventsByDay(): Flow<List<EventDisplay>> {
-        return loadEventListByDayInteractor(selectedDay).map { eventModels ->
-            eventModels.map { eventModel -> eventModel.toEventDisplay() }
-        }
-    }
+    val selectedDay: Calendar
+        get() = _selectedDay
 
-    fun loadDaysWithEvents(): Flow<Set<LocalDate>> {
-        return loadDayListWithEventList()
-    }
+
+    val daysWithEventsFlow: Flow<Set<LocalDate>> = loadDaysWithEvents()
+    val eventsByDayFlow: Flow<List<EventModel>> = loadEventsByDay(selectedDay)
 
     /**
      * @return
@@ -41,23 +36,23 @@ class CalendarViewModel(
 
         if (selectedDay == newSelectedDayCalendar) return false
 
-        selectedDay = newSelectedDayCalendar.apply {
+        _selectedDay = newSelectedDayCalendar.apply {
             set(Calendar.MONTH, get(Calendar.MONTH) - 1)
         }
 
-        loadEventListByDayInteractor.updateDate(selectedDay, viewModelScope)
+        loadEventsByDay.updateDate(selectedDay, viewModelScope)
 
         return true
     }
 
     class Factory @Inject constructor(
-        private val loadEventListByDayInteractor: LoadEventListByDayInteractor,
-        private val loadDayListWithEventList: LoadDayListWithEventList
+        private val loadEventsByDay: LoadEventsByDay,
+        private val loadDaysWithEvents: LoadDaysWithEvents
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return CalendarViewModel(
-                loadEventListByDayInteractor,
-                loadDayListWithEventList,
+                loadEventsByDay,
+                loadDaysWithEvents,
             ) as T
         }
     }

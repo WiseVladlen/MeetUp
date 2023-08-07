@@ -5,6 +5,6 @@ data class RoomModel(
     val title: String,
 ) {
     companion object {
-        private const val DEFAULT_ID = 0
+        const val DEFAULT_ID = 0
     }
 }

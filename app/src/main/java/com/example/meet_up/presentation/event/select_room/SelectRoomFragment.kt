@@ -27,7 +27,7 @@ class SelectRoomFragment : Fragment(R.layout.fragment_select_room) {
     lateinit var selectRoomViewModelFactory: SelectRoomViewModel.SelectRoomViewModelFactory
     private val viewModel by viewModels<SelectRoomViewModel> { selectRoomViewModelFactory }
 
-    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.menu_nav_graph)
+    private val eventConfigViewModel by navGraphViewModels<EventConfigViewModel>(R.id.manage_event_graph)
 
     private val roomListAdapter = RoomListAdapter(::onRoomItemClick)
 
