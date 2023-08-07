@@ -140,7 +140,8 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private fun observeModel() {
         viewModel.eventsByDayFlow.onEach { list ->
             with(binding) {
-                if ((list.isEmpty() && eventListViewSwitcher.currentView.id == eventListRecyclerView.id) || eventListViewSwitcher.currentView.id == textViewEmpty.id) {
+                if ((list.isEmpty() && eventListViewSwitcher.currentView.id == eventListRecyclerView.id) ||
+                    (list.isNotEmpty() && eventListViewSwitcher.currentView.id == textViewEmpty.id)) {
                     eventListViewSwitcher.showNext()
                 }
 
