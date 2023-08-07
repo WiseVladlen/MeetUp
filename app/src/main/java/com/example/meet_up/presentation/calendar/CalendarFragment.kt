@@ -140,17 +140,12 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     private fun observeModel() {
         viewModel.eventsByDayFlow.onEach { list ->
             with(binding) {
-                if (list.isEmpty()) {
-                    if (eventListViewSwitcher.currentView.id == eventListRecyclerView.id) {
-                        eventListViewSwitcher.showNext()
-                    }
-                } else if (eventListViewSwitcher.currentView.id == textViewEmpty.id) {
-                    eventAdapter.submitList(list.map { it.toEventDisplay() })
-
+                if ((list.isEmpty() && eventListViewSwitcher.currentView.id == eventListRecyclerView.id) || eventListViewSwitcher.currentView.id == textViewEmpty.id) {
                     eventListViewSwitcher.showNext()
                 }
 
                 textViewTitle.text = viewModel.selectedDay.time.toFullFormat()
+                eventAdapter.submitList(list.map { it.toEventDisplay() })
             }
         }.launchWhenCreated(viewLifecycleOwner)
 
