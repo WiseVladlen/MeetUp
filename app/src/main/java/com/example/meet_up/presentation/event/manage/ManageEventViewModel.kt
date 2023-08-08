@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.data.local.UserStorage
-import com.example.meet_up.domain.interactors.CreateEvent
+import com.example.meet_up.domain.use_cases.CreateEvent
 import com.example.meet_up.domain.models.EventModel
 import com.example.meet_up.domain.models.RoomModel
 import com.example.meet_up.domain.models.UserModel
-import com.example.meet_up.domain.interactors.DeleteEvent
-import com.example.meet_up.domain.interactors.LoadEvent
-import com.example.meet_up.domain.interactors.UpdateEvent
-import com.example.meet_up.domain.interactors.ValidateEvent
+import com.example.meet_up.domain.use_cases.DeleteEvent
+import com.example.meet_up.domain.use_cases.LoadEvent
+import com.example.meet_up.domain.use_cases.UpdateEvent
+import com.example.meet_up.domain.use_cases.ValidateEvent
 import com.example.meet_up.domain.models.EventModel.Companion.validate
 import com.example.meet_up.tools.MIN_EVENT_DURATION
 import com.example.meet_up.tools.getEndOfDayCalendar
@@ -135,12 +135,6 @@ class ManageEventViewModel(
             set(Calendar.MINUTE, minute)
         }
         return endDate.time.toShortFormat()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        putJob.cancel()
-        deleteJob.cancel()
     }
 
     companion object {

@@ -12,7 +12,7 @@ import java.util.Date
 import javax.inject.Inject
 
 class EventRepositoryImpl @Inject constructor(
-    private val dataBase: DataBase
+    private val dataBase: DataBase,
 ): EventRepository {
 
     override suspend fun getEvent(eventId: String): EventModel {

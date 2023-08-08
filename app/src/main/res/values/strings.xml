@@ -49,7 +49,6 @@
     <string name="manage_participant_list.title">Select participants</string>
     <string name="manage_participant_list.done">Done</string>
     <string name="manage_participant_list.hint">Add people</string>
-    <string name="manage_participant_list.no_results_message">No results</string>
     <!-- People card layout. -->
     <string name="people_card.delete_people_description">Delete people</string>
     <!-- Event list screen. -->

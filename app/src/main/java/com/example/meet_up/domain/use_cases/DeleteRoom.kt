@@ -1,4 +1,4 @@
-package com.example.meet_up.domain.interactors
+package com.example.meet_up.domain.use_cases
 
 import com.example.meet_up.domain.repositories.RoomRepository
 import javax.inject.Inject

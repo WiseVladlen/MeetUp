@@ -20,7 +20,7 @@ import com.example.meet_up.presentation.event.manage_participant_list.adapter.Pa
 import com.example.meet_up.presentation.event.manage_participant_list.adapter.PeopleListDelegationAdapter
 import com.example.meet_up.presentation.event.manage_participant_list.adapter.PeopleListItem
 import com.example.meet_up.tools.hide
-import com.example.meet_up.tools.launchWhenStarted
+import com.example.meet_up.tools.launchWhenCreated
 import com.example.meet_up.tools.show
 import com.example.meet_up.tools.showKeyboard
 import kotlinx.coroutines.flow.first
@@ -98,11 +98,11 @@ class ManageParticipantListFragment : Fragment(R.layout.fragment_manage_particip
     private fun observeModels() {
         viewModel.userListFlow.onEach { list ->
             peopleListAdapter.items = list.map { PeopleListItem.NonParticipantItem(it) }
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenCreated(viewLifecycleOwner)
 
         viewModel.participantListFlow.onEach { list ->
             peopleListAdapter.items = list.map { PeopleListItem.ParticipantItem(it) }
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenCreated(viewLifecycleOwner)
     }
 
     private fun setupRecyclerView() {

@@ -19,20 +19,18 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_login"
+                style="@style/EditTextWithoutBorderStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
                 android:hint="@string/manage_participant_list.hint" />
 
             <TextView
                 android:id="@+id/textView_done"
+                style="@style/ToolbarActionButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/toolbar.action_button_horizontal_margin"
-                android:paddingHorizontal="@dimen/toolbar.action_button_horizontal_padding"
-                android:paddingVertical="@dimen/toolbar.action_button_vertical_padding"
                 android:text="@string/manage_participant_list.done" />
 
         </LinearLayout>

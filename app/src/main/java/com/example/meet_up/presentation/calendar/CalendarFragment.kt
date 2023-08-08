@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +20,6 @@ import com.example.meet_up.presentation.calendar.adapter.EventAdapter
 import com.example.meet_up.presentation.mappers.toEventDisplay
 import com.example.meet_up.tools.hide
 import com.example.meet_up.tools.launchWhenCreated
-import com.example.meet_up.tools.launchWhenStarted
 import com.example.meet_up.tools.show
 import com.example.meet_up.tools.toFullFormat
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
@@ -94,7 +92,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
                             eventContainer.show()
                             calendarView.hide()
 
-                            textViewTitle.text = viewModel.selectedDay.time.toFullFormat()
+                            textViewDate.text = viewModel.selectedDay.time.toFullFormat()
                         }
 
                         monthButton.id -> {
@@ -141,11 +139,12 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         viewModel.eventsByDayFlow.onEach { list ->
             with(binding) {
                 if ((list.isEmpty() && eventListViewSwitcher.currentView.id == eventListRecyclerView.id) ||
-                    (list.isNotEmpty() && eventListViewSwitcher.currentView.id == textViewEmpty.id)) {
+                    (list.isNotEmpty() && eventListViewSwitcher.currentView.id == textViewEmpty.id)
+                ) {
                     eventListViewSwitcher.showNext()
                 }
 
-                textViewTitle.text = viewModel.selectedDay.time.toFullFormat()
+                textViewDate.text = viewModel.selectedDay.time.toFullFormat()
                 eventAdapter.submitList(list.map { it.toEventDisplay() })
             }
         }.launchWhenCreated(viewLifecycleOwner)
@@ -153,7 +152,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         viewModel.daysWithEventsFlow.onEach { days ->
             dayBinder.updateDaysWithEvents(days)
             binding.calendarView.notifyCalendarChanged()
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenCreated(viewLifecycleOwner)
     }
 
     private fun onEventClick(eventId: String) {

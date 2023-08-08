@@ -3,8 +3,8 @@ package com.example.meet_up.presentation.calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.meet_up.domain.interactors.LoadDaysWithEvents
-import com.example.meet_up.domain.interactors.LoadEventsByDay
+import com.example.meet_up.domain.use_cases.LoadDaysWithEvents
+import com.example.meet_up.domain.use_cases.LoadEventsByDay
 import com.example.meet_up.domain.models.EventModel
 import com.example.meet_up.tools.toCalendar
 import kotlinx.coroutines.flow.Flow

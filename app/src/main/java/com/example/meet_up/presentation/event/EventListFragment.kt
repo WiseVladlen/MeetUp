@@ -52,7 +52,8 @@ class EventListFragment: Fragment(R.layout.fragment_event_list) {
         viewModel.eventListFlow.onEach { list ->
             with(binding) {
                 if ((list.isEmpty() && eventListViewSwitcher.currentView.id == eventListRecyclerView.id) ||
-                    (list.isNotEmpty() && eventListViewSwitcher.currentView.id == textViewEmpty.id)) {
+                    (list.isNotEmpty() && eventListViewSwitcher.currentView.id == textViewEmpty.id)
+                ) {
                     eventListViewSwitcher.showNext()
                 }
 

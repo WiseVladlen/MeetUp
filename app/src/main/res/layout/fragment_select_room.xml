@@ -11,13 +11,10 @@
         android:layout_height="?actionBarSize"
         android:layout_marginBottom="@dimen/toolbar.bottom_margin"
         app:navigationIcon="@drawable/ic_baseline_arrow_back"
-        app:title="@string/select_room.title"
-        app:titleCentered="true">
-
-    </com.google.android.material.appbar.MaterialToolbar>
+        app:title="@string/select_room.title" />
 
     <ViewSwitcher
-        android:id="@+id/viewSwitcher"
+        android:id="@+id/room_list_viewSwitcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

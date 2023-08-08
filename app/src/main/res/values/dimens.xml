@@ -11,8 +11,11 @@
     <dimen name="button.horizontal_margin">16dp</dimen>
     <dimen name="button.vertical_margin">16dp</dimen>
     <dimen name="button.top_margin">12dp</dimen>
+    <!-- Edit text. -->
+    <dimen name="edit_text.padding">0dp</dimen>
     <!-- Radio button. -->
     <dimen name="radio_button.width">64dp</dimen>
+    <dimen name="radio_button.height">36dp</dimen>
     <!-- Image button. -->
     <dimen name="image_button.width">56dp</dimen>
     <dimen name="image_button.height">56dp</dimen>
@@ -20,6 +23,7 @@
     <!-- Text. -->
     <dimen name="text.horizontal_padding">16dp</dimen>
     <!-- Toolbar. -->
+    <dimen name="toolbar.elevation">0dp</dimen>
     <dimen name="toolbar.bottom_margin">12dp</dimen>
     <dimen name="toolbar.action_button_horizontal_padding">16dp</dimen>
     <dimen name="toolbar.action_button_vertical_padding">8dp</dimen>
@@ -40,11 +44,13 @@
     <dimen name="day_cell.event_indicator_width">4dp</dimen>
     <dimen name="day_cell.event_indicator_height">4dp</dimen>
     <dimen name="day_cell.event_indicator_bottom_margin">12dp</dimen>
-    <!-- Date & Time card layout. -->
-    <dimen name="date_time_card.date_horizontal_padding">52dp</dimen>
     <!-- Text card layout. -->
     <dimen name="text_card.horizontal_padding">20dp</dimen>
-    <!-- Text-icon card layout. -->
-    <dimen name="text_icon_card.horizontal_padding">20dp</dimen>
-    <dimen name="text_icon_card.drawable_padding">28dp</dimen>
+    <!-- Text-image card layout. -->
+    <dimen name="text_image_card.horizontal_padding">20dp</dimen>
+    <dimen name="text_image_card.drawable_padding">28dp</dimen>
+    <!-- Text-image space card layout. -->
+    <dimen name="text_image_space_card.drawable_padding">52dp</dimen>
+    <!-- Weekdays container. -->
+    <dimen name="weekdays_container.top_margin">12dp</dimen>
 </resources>

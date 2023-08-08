@@ -228,7 +228,7 @@ class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
                 setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_peoples, 0, 0, 0)
 
                 setOnClickListener {
-                    navController.navigate(ManageEventFragmentDirections.actionEditEventFragmentToManageParticipantListFragment())
+                    navController.navigate(ManageEventFragmentDirections.actionManageEventFragmentToManageParticipantListFragment())
                 }
             }
 
@@ -236,7 +236,7 @@ class ManageEventFragment : Fragment(R.layout.fragment_manage_event) {
                 setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_location, 0, 0, 0)
 
                 setOnClickListener {
-                    navController.navigate(ManageEventFragmentDirections.actionEditEventFragmentToSelectRoomFragment())
+                    navController.navigate(ManageEventFragmentDirections.actionManageEventFragmentToSelectRoomFragment())
                 }
             }
 

@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_marginBottom="@dimen/toolbar.bottom_margin"
-        app:title="@string/event_list.title"
-        app:titleCentered="true" />
+        app:title="@string/event_list.title" />
 
     <ViewSwitcher
         android:id="@+id/event_list_viewSwitcher"

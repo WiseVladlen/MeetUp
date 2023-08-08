@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">@dimen/edit_text.padding</item>
+    </style>
+
+    <style name="EditTextWithoutBorderStyle" parent="@style/EditTextStyle">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="MaterialButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="titleCentered">true</item>
+        <item name="android:elevation">@dimen/toolbar.elevation</item>
+    </style>
+
+    <style name="ToolbarActionButtonStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?colorPrimaryDark</item>
+        <item name="android:layout_gravity">end|center_vertical</item>
+        <item name="android:paddingHorizontal">@dimen/toolbar.action_button_horizontal_padding
+        </item>
+        <item name="android:paddingVertical">@dimen/toolbar.action_button_vertical_padding</item>
+    </style>
+
+    <style name="TextCardStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?colorPrimaryDark</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">@dimen/text_image_card.horizontal_padding</item>
+    </style>
+
+    <style name="TextCardCenteredStyle" parent="TextCardStyle">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextImageCardStyle" parent="TextCardStyle">
+        <item name="android:drawablePadding">@dimen/text_image_card.drawable_padding</item>
+    </style>
+
+    <style name="TextImageSpaceCardStyle" parent="TextCardStyle">
+        <item name="drawableStartCompat">@android:color/transparent</item>
+        <item name="android:drawablePadding">@dimen/text_image_space_card.drawable_padding</item>
+    </style>
+
+    <style name="DayCellStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?colorPrimaryDark</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="WeekCellStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?colorPrimaryDark</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="SwitchStyle" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:paddingHorizontal">@dimen/switch.horizontal_padding</item>
+    </style>
+
+    <style name="DateCardStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">?colorPrimaryVariant</item>
+    </style>
+
+    <style name="DateNormalCardStyle" parent="DateCardStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="DateLargeCardStyle" parent="DateCardStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Large</item>
+    </style>
+
+    <style name="RadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:background">@drawable/radio_button_selector</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/radio_button_text_selector</item>
+    </style>
+
+    <style name="RadioGroupStyle">
+        <item name="android:background">@drawable/radio_group_background</item>
+    </style>
+
+    <style name="ImageButtonStyle" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+</resources>

@@ -7,9 +7,9 @@ import com.example.meet_up.di.MainComponent
 class MainApplication : Application() {
 
     val mainComponent
-        get() = _mainComponent!!
+        get() = _mainComponent
 
-    private var _mainComponent: MainComponent? = null
+    private lateinit var _mainComponent: MainComponent
 
     override fun onCreate() {
         super.onCreate()
@@ -25,9 +25,9 @@ class MainApplication : Application() {
     }
 
     companion object {
-        private var _instance: MainApplication? = null
+        private lateinit var _instance: MainApplication
 
         val INSTANCE: MainApplication
-            get() = _instance!!
+            get() = _instance
     }
 }

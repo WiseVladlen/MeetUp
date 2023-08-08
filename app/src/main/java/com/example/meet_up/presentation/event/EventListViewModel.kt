@@ -2,7 +2,7 @@ package com.example.meet_up.presentation.event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.meet_up.domain.interactors.LoadEvents
+import com.example.meet_up.domain.use_cases.LoadEvents
 import javax.inject.Inject
 import javax.inject.Provider
 

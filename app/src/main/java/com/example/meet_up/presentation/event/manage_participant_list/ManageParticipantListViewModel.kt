@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.meet_up.domain.models.UserModel
-import com.example.meet_up.domain.interactors.LoadFilteredUsers
+import com.example.meet_up.domain.use_cases.LoadFilteredUsers
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -75,11 +75,6 @@ class ManageParticipantListViewModel(
                 .onFailure { _participantListFlow.emit(temporaryParticipantList) }
                 .onSuccess { _userListFlow.emit(it) }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        loadJob.cancel()
     }
 
     class ManageParticipantListViewModelFactory @Inject constructor(

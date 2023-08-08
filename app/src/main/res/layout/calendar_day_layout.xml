@@ -21,10 +21,9 @@
         android:src="@drawable/ic_point" />
 
     <TextView
-        android:id="@+id/calendarDayText"
+        android:id="@+id/textView_day"
+        style="@style/DayCellStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="16sp" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

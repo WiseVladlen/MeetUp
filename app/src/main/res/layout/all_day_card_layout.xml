@@ -6,20 +6,17 @@
     android:orientation="horizontal">
 
     <TextView
+        style="@style/TextImageCardStyle"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:drawablePadding="@dimen/text_icon_card.drawable_padding"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/text_icon_card.horizontal_padding"
         android:text="@string/manage_event.all_day"
         app:drawableStartCompat="@drawable/ic_baseline_access_time" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/mode_switch"
+        style="@style/SwitchStyle"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:paddingHorizontal="@dimen/switch.horizontal_padding" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

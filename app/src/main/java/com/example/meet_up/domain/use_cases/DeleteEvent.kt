@@ -1,4 +1,4 @@
-package com.example.meet_up.domain.interactors
+package com.example.meet_up.domain.use_cases
 
 import com.example.meet_up.domain.repositories.EventRepository
 import com.example.meet_up.domain.repositories.RemoteEventRepository

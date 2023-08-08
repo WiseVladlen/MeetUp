@@ -1,18 +1,16 @@
 package com.example.meet_up.presentation.event.adapter
 
 import com.example.meet_up.R
+import com.example.meet_up.databinding.DateCardLayoutBinding
 import com.example.meet_up.databinding.EventCardLayoutBinding
 import com.example.meet_up.tools.toFullFormat
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 
-fun dateAdapterDelegate() = adapterDelegateViewBinding<EventListItem.DateItem, EventListItem, EventCardLayoutBinding>(
-    { layoutInflater, parent -> EventCardLayoutBinding.inflate(layoutInflater, parent, false) }
+fun dateAdapterDelegate() = adapterDelegateViewBinding<EventListItem.DateItem, EventListItem, DateCardLayoutBinding>(
+    { layoutInflater, parent -> DateCardLayoutBinding.inflate(layoutInflater, parent, false) }
 ) {
     bind {
-        binding.root.apply {
-            text = item.date.toFullFormat()
-            setBackgroundColor(getColor(R.color.gainsboro))
-        }
+        binding.root.text = item.date.toFullFormat()
     }
 }
 

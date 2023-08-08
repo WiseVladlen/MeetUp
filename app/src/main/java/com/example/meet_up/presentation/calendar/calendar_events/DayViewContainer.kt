@@ -11,10 +11,10 @@ import java.time.LocalDate
 
 class DayViewContainer(view: View) : ViewContainer(view) {
 
-    private var _binding: CalendarDayLayoutBinding? = null
+    private var _binding: CalendarDayLayoutBinding
 
     private val binding
-        get() = _binding!!
+        get() = _binding
 
     init {
         _binding = CalendarDayLayoutBinding.bind(view)
@@ -30,13 +30,14 @@ class DayViewContainer(view: View) : ViewContainer(view) {
                 selectedIndicator.isVisible = date.date == dayContainerProps.selectedDate
 
                 eventsIndicator.isVisible = dayContainerProps.daysWithEvents.contains(date.date)
-                calendarDayText.text = date.date.dayOfMonth.toString()
+                textViewDay.text = date.date.dayOfMonth.toString()
 
                 root.setOnClickListener { onDayClickListener(date.date) }
             } else {
                 selectedIndicator.hide()
                 eventsIndicator.hide()
-                calendarDayText.text = String()
+
+                textViewDay.text = String()
 
                 root.setOnClickListener(null)
             }

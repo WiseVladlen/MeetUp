@@ -15,6 +15,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_text"
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textEmailAddress" />
@@ -31,6 +32,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_text"
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword" />

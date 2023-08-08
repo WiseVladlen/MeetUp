@@ -10,7 +10,8 @@ class DayBinder(
     private var selectedDay: LocalDate = LocalDate.now(),
 ) : MonthDayBinder<DayViewContainer> {
 
-    private val daysWithEvents: MutableSet<LocalDate> = mutableSetOf()
+    private val daysWithEvents = mutableSetOf<LocalDate>()
+
     override fun bind(container: DayViewContainer, data: CalendarDay) {
         container.bind(
             data,

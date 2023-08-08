@@ -61,10 +61,10 @@
                 android:name="eventId"
                 app:argType="string" />
             <action
-                android:id="@+id/action_editEventFragment_to_manageParticipantListFragment"
+                android:id="@+id/action_manageEventFragment_to_manageParticipantListFragment"
                 app:destination="@id/manageParticipantListFragment" />
             <action
-                android:id="@+id/action_editEventFragment_to_selectRoomFragment"
+                android:id="@+id/action_manageEventFragment_to_selectRoomFragment"
                 app:destination="@id/selectRoomFragment" />
         </fragment>
 

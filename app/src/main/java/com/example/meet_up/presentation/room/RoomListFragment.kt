@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,7 @@ import com.example.meet_up.R
 import com.example.meet_up.databinding.FragmentRoomListBinding
 import com.example.meet_up.domain.models.RoomModel
 import com.example.meet_up.presentation.room.adapter.RoomListAdapter
-import com.example.meet_up.tools.launchWhenStarted
+import com.example.meet_up.tools.launchWhenCreated
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -72,17 +71,15 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list) {
     private fun observeModels() {
         viewModel.roomListFlow.onEach { list ->
             with(binding) {
-                if (list.isEmpty()) {
-                    if (roomListViewSwitcher.currentView.id == roomListRecyclerView.id) {
-                        roomListViewSwitcher.showNext()
-                    }
-                } else if (roomListViewSwitcher.currentView.id == textViewEmpty.id) {
-                    roomListAdapter.submitList(list)
-
+                if ((list.isEmpty() && roomListViewSwitcher.currentView.id == roomListRecyclerView.id) ||
+                    (list.isNotEmpty() && roomListViewSwitcher.currentView.id == textViewEmpty.id)
+                ) {
                     roomListViewSwitcher.showNext()
                 }
+
+                roomListAdapter.submitList(list)
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenCreated(viewLifecycleOwner)
     }
 
     private fun onRoomItemClick(roomModel: RoomModel) {

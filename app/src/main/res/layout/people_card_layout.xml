@@ -7,13 +7,10 @@
 
     <TextView
         android:id="@+id/textView_title"
+        style="@style/TextImageCardStyle"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
         android:layout_weight="1"
-        android:drawablePadding="@dimen/text_icon_card.drawable_padding"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/text_icon_card.horizontal_padding"
         app:drawableStartCompat="@drawable/ic_baseline_person" />
 
     <ImageButton
@@ -21,7 +18,6 @@
         android:layout_width="@dimen/image_button.width"
         android:layout_height="@dimen/image_button.height"
         android:layout_marginEnd="@dimen/image_button.end_margin"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/people_card.delete_people_description"
         android:src="@drawable/ic_baseline_close"
         android:visibility="gone" />

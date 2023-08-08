@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/toolbar.bottom_margin"
-        app:title="@string/room_list.title"
-        app:titleCentered="true" />
+        app:title="@string/room_list.title" />
 
     <ViewSwitcher
         android:id="@+id/room_list_viewSwitcher"

@@ -4,11 +4,11 @@ import android.view.View
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 
-object MonthsHeaderBinder: MonthHeaderFooterBinder<MonthsViewContainer> {
+object MonthsHeaderBinder: MonthHeaderFooterBinder<MonthViewContainer> {
 
-    override fun bind(container: MonthsViewContainer, data: CalendarMonth) {
+    override fun bind(container: MonthViewContainer, data: CalendarMonth) {
         container.bind(data)
     }
 
-    override fun create(view: View): MonthsViewContainer = MonthsViewContainer(view)
+    override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 }

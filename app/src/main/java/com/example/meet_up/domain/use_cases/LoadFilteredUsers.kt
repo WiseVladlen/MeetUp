@@ -1,4 +1,4 @@
-package com.example.meet_up.domain.interactors
+package com.example.meet_up.domain.use_cases
 
 import com.example.meet_up.domain.models.UserModel
 import com.example.meet_up.domain.repositories.UserRepository

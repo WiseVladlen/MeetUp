@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RoomRepositoryImpl @Inject constructor(
-    private val dataBase: DataBase
+    private val dataBase: DataBase,
 ): RoomRepository {
 
     override suspend fun createRoom(roomModel: RoomModel): Result<Unit> {

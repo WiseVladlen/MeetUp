@@ -3,11 +3,11 @@ package com.example.meet_up.presentation.room.manage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.meet_up.domain.interactors.CreateRoom
+import com.example.meet_up.domain.use_cases.CreateRoom
 import com.example.meet_up.domain.models.RoomModel
-import com.example.meet_up.domain.interactors.DeleteRoom
-import com.example.meet_up.domain.interactors.LoadRoom
-import com.example.meet_up.domain.interactors.UpdateRoom
+import com.example.meet_up.domain.use_cases.DeleteRoom
+import com.example.meet_up.domain.use_cases.LoadRoom
+import com.example.meet_up.domain.use_cases.UpdateRoom
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -28,7 +28,7 @@ class ManageRoomViewModel(
     private val deleteRoom: DeleteRoom,
 ) : ViewModel() {
 
-    private val updateJob: CompletableJob = SupervisorJob()
+    private val putJob: CompletableJob = SupervisorJob()
     private val deleteJob: CompletableJob = SupervisorJob()
 
     private val _roomFlow = MutableSharedFlow<Result<RoomModel>>(0, 1, BufferOverflow.DROP_OLDEST)
@@ -51,7 +51,7 @@ class ManageRoomViewModel(
     }
 
     fun put(roomId: Int, title: String) {
-        viewModelScope.launch(Dispatchers.IO + updateJob) {
+        viewModelScope.launch(Dispatchers.IO + putJob) {
             if (roomId == RoomModel.DEFAULT_ID) {
                 createRoom(RoomModel(title = title))
                     .onFailure { _onErrorFlow.emit(it.message.toString()) }
@@ -70,12 +70,6 @@ class ManageRoomViewModel(
                 .onFailure { _onErrorFlow.emit(it.message.toString()) }
                 .onSuccess { _onSuccessFlow.emit(it) }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        updateJob.cancel()
-        deleteJob.cancel()
     }
 
     class ManageRoomViewModelFactory @Inject constructor(

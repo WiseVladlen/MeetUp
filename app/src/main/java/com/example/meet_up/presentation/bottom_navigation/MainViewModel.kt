@@ -3,7 +3,7 @@ package com.example.meet_up.presentation.bottom_navigation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.meet_up.domain.interactors.SynchronizeEvents
+import com.example.meet_up.domain.use_cases.SynchronizeEvents
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -15,17 +15,12 @@ class MainViewModel(
     private val synchronizeEvents: SynchronizeEvents,
 ) : ViewModel() {
 
-    private val jobSynchronize: CompletableJob = SupervisorJob()
+    private val syncJob: CompletableJob = SupervisorJob()
 
     fun synchronize() {
-        viewModelScope.launch(Dispatchers.IO + jobSynchronize) {
+        viewModelScope.launch(Dispatchers.IO + syncJob) {
             synchronizeEvents()
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        jobSynchronize.cancel()
     }
     
     class MainViewModelFactory @Inject constructor(
